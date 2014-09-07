@@ -1,0 +1,18 @@
+{
+  "name": "--ignore-this--",
+  "description": "--ignore-this--",
+  "version": "0.0.0",
+  "main": "index.html",
+  "window": {
+    "fullscreen": false,
+    "resizable": true,
+    "title": "SLOC",
+    "toolbar": true,
+    "width": 400,
+    "height": 480
+  },
+  "dependencies": {
+    "linebuffer": "^1.0",
+    "sloc": "~0.1"
+  }
+}

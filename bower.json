@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "name": "sloc-app",
+  "dependencies": {
+    "canjs": "git://github.com/bitovi/canjs.git#minor",
+    "chai": "1.x",
+    "funcunit": "2.1.x",
+    "jquery": "2.x",
+    "less.js": "1.x",
+    "mocha": "1.x",
+    "myth": "1.x",
+    "pure": "0.5.x",
+    "steal": "0.3.x"
+  }
+}
