@@ -5,25 +5,25 @@
 		//main: "init",
 		
 		paths: {
-			// v2.2.0-pre (dev version)
 			"can":    "vendors/canjs/can.js",
 			"can/*":  "vendors/canjs/*.js",
-			
-			//"can":    "vendors/canjs/amd/can.js",
-			//"can/*":  "vendors/canjs/amd/can/*.js",
-			"jquery": "vendors/jquery/dist/jquery.js"
+			"jquery": "vendors/jquery/dist/jquery.js",
+			"myth":   "vendors/myth/myth.js"
 		},
 		
 		// Until CanJS v2.2 is released
 		map: {
-			//"can/util/util": "can/util/jquery/jquery",
 			"jquery/jquery": "jquery"
 		},
 		
-		// Until can.stache becomes default
+		
 		ext: {
-			stache: "can/view/stache/system"
+			css:  "vendors/steal-myth/steal-myth-css",
+			less: "vendors/steal-myth/steal-myth-less",
+			stache: "can/view/stache/system"	// Until can.stache becomes default
 		},
+		
+		//lessOptions: {strictMath: true},
 		
 		// For jQuery plugins
 		meta: {jquery: {exports : "jQuery"}}

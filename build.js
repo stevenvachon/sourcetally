@@ -29,7 +29,7 @@ function buildJS(callback)
 // Wrap production bundle(s) with node-webkit
 function buildNW(callback)
 {
-	new nwbuild(
+	nwbuild(
 	{
 		cacheDir: path.join(nwbuild_path,"cache"),	// same as its CLI
 		files: "build/**/**",
