@@ -2,8 +2,6 @@
 //{
 	steal.config(
 	{
-		//main: "init",
-		
 		paths: {
 			"can":    "vendors/canjs/can.js",
 			"can/*":  "vendors/canjs/*.js",
@@ -16,17 +14,16 @@
 			"jquery/jquery": "jquery"
 		},
 		
-		
 		ext: {
-			css:  "vendors/steal-myth/steal-myth-css",
+			//css:  "vendors/steal-myth/steal-myth-css",
 			less: "vendors/steal-myth/steal-myth-less",
 			stache: "can/view/stache/system"	// Until can.stache becomes default
 		},
 		
-		//lessOptions: {strictMath: true},
+		lessOptions: {strictMath: true},
 		
 		// For jQuery plugins
-		meta: {jquery: {exports : "jQuery"}}
+		meta: { jquery:{exports:"jQuery"}, myth:{format:"cjs"} }
 	});
 //})();
 

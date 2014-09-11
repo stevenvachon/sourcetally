@@ -3,13 +3,8 @@
   "name": "sloc-app",
   "dependencies": {
     "canjs": "git://github.com/bitovi/canjs.git#448706918990a065bb82d3e8cee450530c839a2c",
-    "chai": "1.x",
-    "funcunit": "2.1.x",
     "jquery": "2.x",
-    "less.js": "1.x",
-    "mocha": "1.x",
     "myth": "1.x",
-    "pure": "0.5.x",
     "steal": "0.3.x",
     "steal-myth": "0.2.x"
   }

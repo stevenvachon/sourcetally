@@ -1,0 +1,164 @@
+page-start >div
+{
+	align-items: center;
+	background-color: #c8c8c8;
+	box-shadow: inset 0 0 0 rgba(126,178,230,0);
+	display: flex;
+	height: 100%;
+	justify-content: center;
+	position: absolute;
+	transition: background-color .3s, box-shadow .5s;
+	user-select: none;
+	width: 100%;
+	
+	>fieldset
+	{
+		border: 0;
+		border-radius: 50% 50% 0 0;	// for :hover
+		margin: 0;
+		padding: 0;
+		position: relative;
+		width: 256px;
+		
+		>i
+		{
+			background: #b7b7b7 url(images/select-file.svg) no-repeat center center;
+			background-size: 75%;
+			border: 1px solid rgba(0,0,0, .1);
+			border-radius: 50%;
+			box-shadow: inset 0 0 10px rgba(0,0,0, .25), 0 0 0 rgba(83,113,167,0);
+			display: block;
+			margin: 0 auto 1.25em auto;
+			position: relative;
+			transition: background-color .3s, box-shadow .5s;
+			
+			&::after
+			{
+				border: 2px dashed rgba(0,0,0, .1);
+				border-radius: 50%;
+				box-sizing: border-box;
+				content: "";
+				height: 90%;
+				left: ~"calc( (100% - 90%) / 2)";
+				position: absolute;
+				top: ~"calc( (100% - 90%) / 2)";
+				width: 90%;
+			}
+			
+			&::before
+			{
+				border-radius: 50%;	// for :hover
+				content: "";
+				display: block;
+				padding-top: 100%;	// http://www.mademyday.de/css-height-equals-width-with-pure-css.html
+			}
+		}
+		
+		>label
+		{
+			display: block;
+			overflow: hidden;
+			position: relative;
+			
+			>input
+			{
+				left: 100%;
+				height: 0;
+				outline: 0;
+				position: absolute;
+				width: 0;
+			}
+			
+			>span	{ opacity:0 }
+		}
+		
+		>span
+		{
+			left: 0;
+			position: absolute;
+			width: 100%;
+		}
+		
+		span
+		{
+			color: black;
+			display: block;
+			font-size: 1.5em;
+			font-weight: bold;
+			opacity: .3;
+			text-align: center;
+			text-shadow: 0 1px 0 white;
+			transition: opacity .2s;
+		}
+		
+		// Still read by screenreaders
+		.hidden
+		{
+			height: 0;
+			overflow: hidden;
+			position: absolute;
+			width: 0;
+		}
+	}
+}
+
+body.focused
+{
+	page-start >div:not(.dragging)
+	{
+		&:not(.pressed) >fieldset:hover
+		{
+			>i
+			{
+				background-color: #afafaf;
+				transition: background-color .2s, box-shadow .5s;
+			}
+			
+			>label >span	{ opacity:0.3 }
+			>span			{ opacity:0 }
+		}
+		
+		&.pressed >fieldset
+		{
+			>i
+			{
+				background-color: #a5a5a5;
+				transition: background-color .2s, box-shadow .5s;
+			}
+			
+			>label >span	{ opacity:0.3 }
+			>span			{ opacity:0 }
+		}
+	}
+}
+
+body.unfocused
+{
+	page-start >div
+	{
+		background-color: #e6e6e6;
+		
+		>fieldset >i
+		{
+			background-color: transparent;
+			box-shadow: inset 0 0 0 rgba(0,0,0,0), 0 0 0 rgba(83,113,167,0);
+			transition: background-color .1s, box-shadow .1s;
+		}
+	}
+}
+
+// Overrides unfocused when dragging in
+body.focused, body.unfocused
+{
+	page-start >div.dragging
+	{
+		background-color: #bbc4cc;
+		box-shadow: inset 0 0 3px rgba(126,178,230,1);
+		
+		>fieldset >i
+		{
+			background-color: #79889b;
+			box-shadow: inset 0 0 0 rgba(0,0,0,0), 0 0 10px rgba(83,113,167,1);
+		}
+	}
+}

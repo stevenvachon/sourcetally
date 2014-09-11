@@ -6,6 +6,14 @@
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 	</head>
 	<body>
+		<script>
+			if (window.require) {
+				global.requireNode = global.require;
+				window.requireNode = window.require;
+				delete global.require;
+				delete window.require;
+			}
+		</script>
 		<script src="init.js" data-env="production" data-main="init"></script>
 	</body>
 </html>

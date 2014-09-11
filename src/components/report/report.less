@@ -1,0 +1,122 @@
+page-report
+{
+	table
+	{
+		display: block;
+		padding-bottom: calc(1em + (0.1em*2) + 2px);	// space for tfoot
+		position: relative;
+		
+		tr
+		{
+			display: flex;
+		}
+		
+		td,th
+		{
+			border: 1px solid #dfdfdf;
+			border-top-width: 0;
+			box-sizing: border-box;
+			overflow: hidden;
+			padding: .1em .3em;
+			
+			&:not(:first-child)
+			{
+				border-left-width: 0;
+				width: 6%;
+			}
+			
+			&:first-child
+			{
+				width: 40%;
+			}
+		}
+		
+		td
+		{
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		
+		th
+		{
+			align-items: center;
+			cursor: default;
+			display: flex;
+			justify-content: center;
+			user-select: none;
+		}
+		
+		tbody,tfoot,thead
+		{
+			display: block;
+		}
+		
+		tbody,tfoot
+		{
+			td,th
+			{
+				display: block;
+				height: calc(1em + (0.1em*2) + 2px);
+				text-align: right;
+			}
+			
+			td:first-child
+			{
+				text-align: left;
+			}
+		}
+		
+		tbody tr:hover td
+		{
+			background-color: #fbfbfb;
+		}
+		
+		tfoot
+		{
+			bottom: 0;
+			font-weight: bold;
+			position: absolute;
+			width: 100%;
+			
+			td,th
+			{
+				background-color: #efefef;
+			}
+		}
+		
+		thead th
+		{
+			background-color: #efefef;
+			border-top-width: 1px;
+			font-weight: normal;
+			padding-bottom: .35em;	// for sort arrow
+			padding-top: .35em;		// for sort arrow
+			position: relative;
+			
+			&.sort-ascend::after,
+			&.sort-descend::after
+			{
+				background-position: center center;
+				background-repeat: no-repeat;
+				background-size: contain;
+				content: "";
+				height: .35em;
+				left: calc(50% - (0.6em/2));
+				position: absolute;
+				width: .6em;
+			}
+			
+			&.sort-ascend::after
+			{
+				background-image: url(images/sort-ascend.svg);
+				top: 0;
+			}
+			
+			&.sort-descend::after
+			{
+				background-image: url(images/sort-descend.svg);
+				bottom: 0;
+			}
+		}
+	}
+}

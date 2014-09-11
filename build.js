@@ -94,7 +94,7 @@ function npmInstall(callback)
 
 
 // Task list
-async.series([dir,packageJson,npmInstall,index,buildJS,buildNW], function(error)
+async.series([dir,packageJson,npmInstall,index,buildJS/*,buildNW*/], function(error)
 {
 	if (error) throw error;
 });

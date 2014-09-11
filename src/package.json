@@ -1,7 +1,7 @@
 {
-  "name": "--ignore-this--",
-  "description": "--ignore-this--",
-  "version": "0.0.0",
+  "name": "--ignore--",
+  "description": "--ignore--",
+  "version": "0.0.0-ignore",
   "main": "index.html",
   "window": {
     "fullscreen": false,

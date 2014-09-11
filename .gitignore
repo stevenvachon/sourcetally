@@ -1,4 +1,6 @@
 build/
+misc/
 node_modules/
 src/node_modules/
 src/vendors/
+src-bak/

@@ -1,7 +1,4 @@
-<h1>Your Project</h1>
-
-<main></main>
-
-<footer>
-	Generated with <a href="https://github.com/stevenvachon/can-boilerplate">can-boilerplate</a>.
-</footer>
+{{#switch state}}
+	{{#case "start"}}<page-start files="{files}"/>{{/case}}
+	{{#case "report"}}<page-report/>{{/case}}
+{{/switch}}

@@ -1,0 +1,73 @@
+<table>
+	<thead>
+		<tr>
+			<th class="sort-ascend">File Name</th>
+			<th>Nominal Lines</th>
+			<th>Source Code Lines</th>
+			<th>Source Code Lines (%)</th>
+			<th>Comment Lines</th>
+			<th>Comment Lines (%)</th>
+			<th>Blank Lines</th>
+			<th>Blank Lines (%)</th>
+			<th>Mixed Lines</th>
+			<th>Mixed Lines (%)</th>
+			<th>Total Lines</th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<th>Total:</th>
+			<td>0</td>
+			<td>0</td>
+			<td>0%</td>
+			<td>0</td>
+			<td>0%</td>
+			<td>0</td>
+			<td>0%</td>
+			<td>0</td>
+			<td>0%</td>
+			<td>0</td>
+		</tr>
+	</tfoot>
+	<tbody>
+		<tr>
+			<td title="~/project/file.js">~/project/file.js</td>
+			<td>0</td>
+			<td>0</td>
+			<td>0%</td>
+			<td>0</td>
+			<td>0%</td>
+			<td>0</td>
+			<td>0%</td>
+			<td>0</td>
+			<td>0%</td>
+			<td>0</td>
+		</tr>
+		<tr>
+			<td title="~/project/deep/nested/file.js">~/project/deep/nested/file.js</td>
+			<td>0</td>
+			<td>0</td>
+			<td>0%</td>
+			<td>0</td>
+			<td>0%</td>
+			<td>0</td>
+			<td>0%</td>
+			<td>0</td>
+			<td>0%</td>
+			<td>0</td>
+		</tr>
+		<tr>
+			<td title="~/project/deep/nested/beyond/belief/well/not/quite/but/it's/still/a/lot/file.js">~/project/deep/nested/beyond/belief/well/not/quite/but/it's/still/a/lot/file.js</td>
+			<td>0</td>
+			<td>0</td>
+			<td>0%</td>
+			<td>0</td>
+			<td>0%</td>
+			<td>0</td>
+			<td>0%</td>
+			<td>0</td>
+			<td>0%</td>
+			<td>0</td>
+		</tr>
+	</tbody>
+</table>

@@ -7,6 +7,15 @@
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 	</head>
 	<body>
+		<script>
+			if (window.require) {
+				//global.requireNode = function(path){ self.requireNode(path) };
+				global.requireNode = global.require;
+				window.requireNode = window.require;
+				delete global.require;
+				delete window.require;
+			}
+		</script>
 		<script src="vendors/steal/steal.js" data-config="config.js" data-main="init" data-env="development"></script>
 	</body>
 </html>

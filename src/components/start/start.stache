@@ -1,0 +1,18 @@
+<div
+	class="{{#if dragging}}dragging{{/if}} {{#if pressed}}pressed{{/if}}"
+	can-click="fileBrowser"
+	can-dragleave="dragOut"
+	can-dragover="dragOver"
+	can-drop="drop"
+	can-mousedown="mouseDown"
+	>
+		<fieldset>
+			<i><!-- icon --></i>
+			<span>Drag Files Here to Analyze</span>
+			<span class="hidden">or</span>
+			<label can-click="stopPropagation">
+				<span>Click Here to Analyze</span>
+				<input type="file" multiple accept=".css,.js,.php" can-change="filesPicked"/>
+			</label>
+		</fieldset>
+</div>
