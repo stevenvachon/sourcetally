@@ -1,8 +1,21 @@
 <table>
+	<colgroup>
+		<col/>
+		<col class="sort-ascend"/>
+		<col/>
+		<col/>
+		<col/>
+		<col/>
+		<col/>
+		<col/>
+		<col/>
+		<col/>
+		<col/>
+	</colgroup>
 	<thead>
 		<tr>
-			<th class="sort-ascend">File Name</th>
-			<th>Nominal Lines</th>
+			<th>File Name</th>
+			<th class="sort-ascend">Nominal Lines</th>
 			<th>Source Code Lines</th>
 			<th>Source Code Lines (%)</th>
 			<th>Comment Lines</th>

@@ -5,7 +5,7 @@ function linearTween(t, b, c, d)
 
 
 
-export default function resizeWindow(endWidth, endHeight, duration, callback)
+function resizeWindow(endWidth, endHeight, duration, callback)
 {
 	var startWidth  = window.outerWidth;
 	var startHeight = window.outerHeight;
@@ -52,3 +52,7 @@ export default function resizeWindow(endWidth, endHeight, duration, callback)
 	
 	requestAnimationFrame(step);
 }
+
+
+
+export default { resizeWindow };

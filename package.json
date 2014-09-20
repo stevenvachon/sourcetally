@@ -2,7 +2,7 @@
   "private": true,
   "name": "sloc-app",
   "description": "Source code line counter for Mac/Windows/Linux.",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "repository": {
     "type": "git",
     "url": "git://github.com/stevenvachon/sloc-app.git"
@@ -15,9 +15,9 @@
     "steal-tools": "~0.4"
   },
   "scripts": {
-    "build": "node build",
-    "install": "bower install && cd src && npm install --production",
-    "run": "nwbuild -r src/",
+    "build": "node build 0.10.5",
+    "install": "nwbuild --version 0.10.5 --forceDownload && bower install && cd src && npm install --production",
+    "run": "nwbuild --version 0.10.5 --run src/",
     "test": "mocha src/test/ --bail --reporter spec --check-leaks"
   }
 }

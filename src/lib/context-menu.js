@@ -1,14 +1,17 @@
-import env from "./environment";
+import globals from "./globals";
+import nwGUI from "./nwGUI";
 
 
 
-if ( env.isDesktop() )
+// Node-WebKit has context menus disabled
+if ( globals.attr("desktop") )
 {
-	var nwMenu = new env.gui.Menu();
+	var nwMenu = new nwGUI.Menu();
+	var nwMenuItem = nwGUI.MenuItem;
 	
 	
 	
-	nwMenu.append( new env.gui.MenuItem(
+	nwMenu.append( new nwMenuItem(
 	{
 		label: "Cut",
 		click: function(){ document.execCommand("cut") }
@@ -16,7 +19,7 @@ if ( env.isDesktop() )
 	
 	
 	
-	nwMenu.append( new env.gui.MenuItem(
+	nwMenu.append( new nwMenuItem(
 	{
 		label: "Copy",
 		click: function(){ document.execCommand("copy") }
@@ -24,7 +27,7 @@ if ( env.isDesktop() )
 	
 	
 	
-	nwMenu.append( new env.gui.MenuItem(
+	nwMenu.append( new nwMenuItem(
 	{
 		label: "Paste",
 		click: function(){ document.execCommand("paste") }

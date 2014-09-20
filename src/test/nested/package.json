@@ -12,6 +12,6 @@
     "height": 480
   },
   "dependencies": {
-    "walk": "^2.3"
+    "recursive-readdir": "^1.2"
   }
 }

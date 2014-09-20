@@ -35,7 +35,7 @@ function buildNW(callback)
 		files: "build/**/**",
 		macIcns: "assets/logo.icns",
 		platforms: ["osx","win","linux32"],
-		version: "0.10.4",
+		version: process.argv[2] || "latest",
 		//winIco: "assets/logo.ico"
 	})
 	.build()

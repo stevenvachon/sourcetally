@@ -5,7 +5,10 @@
     "canjs": "git://github.com/bitovi/canjs.git#448706918990a065bb82d3e8cee450530c839a2c",
     "jquery": "2.x",
     "myth": "1.x",
+    "sloc": "0.1.x",
     "steal": "0.3.x",
-    "steal-myth": "0.2.x"
+    "steal-myth": "0.2.x",
+    "table-export": "git://github.com/kayalshri/tableExport.jquery.plugin.git",
+    "zip.js": "latest"
   }
 }
