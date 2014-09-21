@@ -17,16 +17,16 @@
 		<tfoot>
 			<tr>
 				<th>Total:</th>
-				<td>0</td>
-				<td>0</td>
-				<td>0%</td>
-				<td>0</td>
-				<td>0%</td>
-				<td>0</td>
-				<td>0%</td>
-				<td>0</td>
-				<td>0%</td>
-				<td>0</td>
+				<td>{{formatInteger totals.total}}</td>
+				<td>{{formatInteger totals.source}}</td>
+				<td>{{formatNumber  totals.source%}}%</td>
+				<td>{{formatInteger totals.comment}}</td>
+				<td>{{formatNumber  totals.comment%}}%</td>
+				<td>{{formatInteger totals.empty}}</td>
+				<td>{{formatNumber  totals.empty%}}%</td>
+				<td>{{formatInteger totals.mixed}}</td>
+				<td>{{formatNumber  totals.mixed%}}%</td>
+				<td>{{formatInteger totals.total}}</td>
 			</tr>
 		</tfoot>
 		<tbody>
@@ -35,16 +35,16 @@
 					{{!#if sloc}}
 						<tr>
 							<td title="{{path}}">{{path}}</td>
-							<td>{{sloc.total}}</td>
-							<td>{{sloc.source}}</td>
-							<td>{{sloc.source%}}%</td>
-							<td>{{sloc.comment}}</td>
-							<td>{{sloc.comment%}}%</td>
-							<td>{{sloc.empty}}</td>
-							<td>{{sloc.empty%}}%</td>
-							<td>{{sloc.mixed}}</td>
-							<td>{{sloc.mixed%}}%</td>
-							<td>{{sloc.total}}</td>
+							<td>{{formatInteger sloc.total}}</td>
+							<td>{{formatInteger sloc.source}}</td>
+							<td>{{formatNumber  sloc.source%}}%</td>
+							<td>{{formatInteger sloc.comment}}</td>
+							<td>{{formatNumber  sloc.comment%}}%</td>
+							<td>{{formatInteger sloc.empty}}</td>
+							<td>{{formatNumber  sloc.empty%}}%</td>
+							<td>{{formatInteger sloc.mixed}}</td>
+							<td>{{formatNumber  sloc.mixed%}}%</td>
+							<td>{{formatInteger sloc.total}}</td>
 						</tr>
 					{{!/if}}
 				{{/unless}}

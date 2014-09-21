@@ -82,8 +82,27 @@ export default can.Component.extend(
 		
 		fileTypes: function()
 		{
-			// TODO :: remove serialize() when this is resolved: https://github.com/bitovi/canjs/issues/1237
-			return this.attr("globals.web") ? this.attr("globals.archiveExtensions").serialize() : this.attr("globals.sourceExtensions").serialize();
+			if ( this.attr("globals.web") )
+			{
+				// TODO :: remove serialize() when this is resolved: https://github.com/bitovi/canjs/issues/1237
+				return this.attr("globals.archiveExtensions").serialize();
+			}
+			else
+			{
+				var extensions = [];
+				
+				this.attr("globals.sourceExtensions").forEach( function(sourceExtension)
+				{
+					extensions.push(sourceExtension);
+				});
+				
+				this.attr("globals.archiveExtensions").forEach( function(archiveExtension)
+				{
+					extensions.push(archiveExtension);
+				});
+				
+				return extensions;
+			}
 		},
 		
 		

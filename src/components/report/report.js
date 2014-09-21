@@ -3,6 +3,8 @@ import template from "./report.stache!";
 import "./report.less!";
 
 import getFiles from "lib/getFiles/index";
+
+import accounting from "accounting";
 import sloc from "sloc";
 
 
@@ -41,6 +43,8 @@ export default can.Component.extend(
 		
 		countFiles: function()
 		{
+			can.batch.start();
+			
 			getFiles.contents( this.attr("files"), function(error, data, fileIndex)
 			{
 				var file = this.attr("files").attr(fileIndex);
@@ -56,10 +60,10 @@ export default can.Component.extend(
 				{
 					var slocData = sloc( data, file.attr("extension") );
 					
-					slocData["comment%"] = this.round(slocData.comment / slocData.total * 100, 2);
-					slocData["empty%"]   = this.round(slocData.empty   / slocData.total * 100, 2);
-					slocData["mixed%"]   = this.round(slocData.mixed   / slocData.total * 100, 2);
-					slocData["source%"]  = this.round(slocData.source  / slocData.total * 100, 2);
+					slocData["comment%"] = this.percent(slocData.comment, slocData.total);
+					slocData["empty%"]   = this.percent(slocData.empty,   slocData.total);
+					slocData["mixed%"]   = this.percent(slocData.mixed,   slocData.total);
+					slocData["source%"]  = this.percent(slocData.source,  slocData.total);
 					
 					file.attr("sloc", slocData);
 				}
@@ -67,16 +71,16 @@ export default can.Component.extend(
 				if ( this.attr("count") >= this.attr("files").attr("length") )
 				{
 					this.attr("counted", true);
+					can.batch.stop();
 				}
 			}.bind(this));
 		},
 		
 		
 		
-		round: function(value, decimals)
+		percent: function(value, scale)
 		{
-			// http://www.jacklmoore.com/notes/rounding-in-javascript/
-			return Number( Math.round(value+"e"+decimals) + "e-"+decimals );
+			return value / scale * 100;
 		},
 		
 		
@@ -100,16 +104,74 @@ export default can.Component.extend(
 				
 				can.batch.stop();
 			}
-		}
-	}/*,
+		},
+		
+		
+		
+		totals: can.compute( function()
+		{
+			var totals =
+			{
+				comment: 0,
+				empty: 0,
+				mixed: 0,
+				source: 0,
+				total: 0
+			};
+			
+			this.attr("files").forEach( function(file)
+			{
+				totals.comment += file.attr("sloc").attr("comment");
+				totals.empty   += file.attr("sloc").attr("empty");
+				totals.mixed   += file.attr("sloc").attr("mixed");
+				totals.source  += file.attr("sloc").attr("source");
+				totals.total   += file.attr("sloc").attr("total");
+			});
+			
+			totals["comment%"] = this.percent(totals.comment, totals.total);
+			totals["empty%"]   = this.percent(totals.empty,   totals.total);
+			totals["mixed%"]   = this.percent(totals.mixed,   totals.total);
+			totals["source%"]  = this.percent(totals.source,  totals.total);
+			
+			return totals;
+		})
+	},
 	
 	helpers:
 	{
-		calculations: function(options)
+		formatInteger: function(value, options)
 		{
-			var slocData = options.scope.attr("sloc");
+			return accounting.formatNumber( value() );
+		},
+		
+		
+		
+		formatNumber: function()
+		{
+			var output = "";
 			
-			console.log(slocData);
-		}
-	}*/
+			var options = arguments[arguments.length-1];
+			
+			// `{{formatNumber deep.nested.value}}`
+			var deepestNestedValue = arguments[arguments.length-2];
+			
+			if (deepestNestedValue)
+			{
+				output = deepestNestedValue();
+				
+				// Renders ##.##
+				if (output !== 0)
+				{
+					output = accounting.toFixed(output, 2);
+				}
+				// Renders 0
+				else
+				{
+					output = output.toString();
+				}
+			}
+			
+			return output;
+		},
+	}
 });

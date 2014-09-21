@@ -41,12 +41,9 @@ function contents(files, callback)
 		}
 		else
 		{
-			files.forEach( function(file, i)
+			fs.readFile( file.attr("path"), {encoding:"utf8"}, function(error, data)
 			{
-				fs.readFile( file.attr("path"), {encoding:"utf8"}, function(error, data)
-				{
-					callback(error, data, i);
-				});
+				callback(error, data, i);
 			});
 		}
 	});

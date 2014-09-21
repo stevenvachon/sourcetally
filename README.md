@@ -28,3 +28,5 @@ Built with [Node.js](http://nodejs.org), [node-webkit](https://github.com/rogerw
 * Run sloc in a `Worker()`
 * Make report grid head/footer static when scrolling
 * Add support for aliases on OSX
+* Help fix https://github.com/google/traceur-compiler/issues/1340
+* Help fix https://github.com/bitovi/steal/pull/210

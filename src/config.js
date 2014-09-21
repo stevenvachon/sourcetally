@@ -3,13 +3,14 @@
 	steal.config(
 	{
 		paths: {
-			"can":    "vendors/canjs/can.js",
-			"can/*":  "vendors/canjs/*.js",
-			"jquery": "vendors/jquery/dist/jquery.js",
-			"myth":   "vendors/myth/myth.js",
-			"sloc":   "vendors/sloc/lib/sloc.js",
-			"zip":    "vendors/zip.js/WebContent/zip.js",
-			"zip/*":  "vendors/zip.js/WebContent/*.js"
+			"accounting":	"vendors/accounting.js/accounting.js",
+			"can":			"vendors/canjs/can.js",
+			"can/*":		"vendors/canjs/*.js",
+			"jquery":		"vendors/jquery/dist/jquery.js",
+			"myth":			"vendors/myth/myth.js",
+			"sloc":			"vendors/sloc/lib/sloc.js",
+			"zip":			"vendors/zip.js/WebContent/zip.js",
+			"zip/*":		"vendors/zip.js/WebContent/*.js"
 		},
 		
 		// Until CanJS v2.2 is released

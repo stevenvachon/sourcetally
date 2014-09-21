@@ -8,7 +8,7 @@
 >
 	<fieldset>
 		<i><!-- icon --></i>
-		<span>Drag Files Here to Analyze</span>
+		<span>Drag {{#if globals.web}}Zip File{{else}}Files{{/if}} Here to Analyze</span>
 		<span class="hidden">or</span>
 		<label can-click="stopPropagation">
 			<span>Click Here to Analyze</span>

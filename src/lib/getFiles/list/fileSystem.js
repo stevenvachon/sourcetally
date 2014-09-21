@@ -1,5 +1,3 @@
-import util from "../util";
-
 import globals from "lib/globals";
 
 var fs;
@@ -24,10 +22,7 @@ function expanddir(dir, callback)
 		{
 			var file = root+"/"+stats.name;
 			
-			if ( supportedExtension(file) )
-			{
-				expandedFiles.push({ path:file, stats:stats });
-			}
+			expandedFiles.push({ path:file, stats:stats });
 			
 			next();
 		})
@@ -60,7 +55,7 @@ function expandDirs(files, callback)
 	
 	files.forEach( function(file, i, array)
 	{
-		fs.stat(file.path, function(statError, stats)
+		fs.lstat(file.path, function(statError, stats)
 		{
 			if (statError)
 			{
@@ -82,8 +77,6 @@ function expandDirs(files, callback)
 			{
 				expanddir(file, function(error, expandedFiles)
 				{
-					count++;
-					
 					// Mark for removal
 					files[i] = false;
 					
@@ -93,6 +86,7 @@ function expandDirs(files, callback)
 						additions.push({ files:expandedFiles, index:i });
 					}
 					
+					count++;
 					doneCheck();
 				});
 			}
@@ -139,13 +133,6 @@ function mergeAdditions(additions, files)
 	}
 	
 	return files;
-}
-
-
-
-function supportedExtension(file)
-{
-	return util.supportedExtension( path.extname(file), globals.attr("sourceExtensions") );
 }
 
 
