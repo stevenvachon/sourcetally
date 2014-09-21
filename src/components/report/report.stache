@@ -1,86 +1,56 @@
-<table>
-	<colgroup>
-		<col/>
-		<col class="sort-ascend"/>
-		<col/>
-		<col/>
-		<col/>
-		<col/>
-		<col/>
-		<col/>
-		<col/>
-		<col/>
-		<col/>
-	</colgroup>
-	<thead>
-		<tr>
-			<th>File Name</th>
-			<th class="sort-ascend">Nominal Lines</th>
-			<th>Source Code Lines</th>
-			<th>Source Code Lines (%)</th>
-			<th>Comment Lines</th>
-			<th>Comment Lines (%)</th>
-			<th>Blank Lines</th>
-			<th>Blank Lines (%)</th>
-			<th>Mixed Lines</th>
-			<th>Mixed Lines (%)</th>
-			<th>Total Lines</th>
-		</tr>
-	</thead>
-	<tfoot>
-		<tr>
-			<th>Total:</th>
-			<td>0</td>
-			<td>0</td>
-			<td>0%</td>
-			<td>0</td>
-			<td>0%</td>
-			<td>0</td>
-			<td>0%</td>
-			<td>0</td>
-			<td>0%</td>
-			<td>0</td>
-		</tr>
-	</tfoot>
-	<tbody>
-		<tr>
-			<td title="~/project/file.js">~/project/file.js</td>
-			<td>0</td>
-			<td>0</td>
-			<td>0%</td>
-			<td>0</td>
-			<td>0%</td>
-			<td>0</td>
-			<td>0%</td>
-			<td>0</td>
-			<td>0%</td>
-			<td>0</td>
-		</tr>
-		<tr>
-			<td title="~/project/deep/nested/file.js">~/project/deep/nested/file.js</td>
-			<td>0</td>
-			<td>0</td>
-			<td>0%</td>
-			<td>0</td>
-			<td>0%</td>
-			<td>0</td>
-			<td>0%</td>
-			<td>0</td>
-			<td>0%</td>
-			<td>0</td>
-		</tr>
-		<tr>
-			<td title="~/project/deep/nested/beyond/belief/well/not/quite/but/it's/still/a/lot/file.js">~/project/deep/nested/beyond/belief/well/not/quite/but/it's/still/a/lot/file.js</td>
-			<td>0</td>
-			<td>0</td>
-			<td>0%</td>
-			<td>0</td>
-			<td>0%</td>
-			<td>0</td>
-			<td>0%</td>
-			<td>0</td>
-			<td>0%</td>
-			<td>0</td>
-		</tr>
-	</tbody>
-</table>
+{{#if counted}}
+	<table>
+		<colgroup>
+			{{#each columns}}
+				<col class="{{#if sorting}}sort-{{#if ascending}}ascend{{else}}descend{{/if}}{{/if}}"/>
+			{{/each}}
+		</colgroup>
+		<thead>
+			<tr>
+				{{#each columns}}
+					<th class="{{#if sorting}}sort-{{#if ascending}}ascend{{else}}descend{{/if}}{{/if}}" can-click="sortColumn">
+						{{name}}
+					</th>
+				{{/each}}
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<th>Total:</th>
+				<td>0</td>
+				<td>0</td>
+				<td>0%</td>
+				<td>0</td>
+				<td>0%</td>
+				<td>0</td>
+				<td>0%</td>
+				<td>0</td>
+				<td>0%</td>
+				<td>0</td>
+			</tr>
+		</tfoot>
+		<tbody>
+			{{#each files}}
+				{{#unless error}}
+					{{!#if sloc}}
+						<tr>
+							<td title="{{path}}">{{path}}</td>
+							<td>{{sloc.total}}</td>
+							<td>{{sloc.source}}</td>
+							<td>{{sloc.source%}}%</td>
+							<td>{{sloc.comment}}</td>
+							<td>{{sloc.comment%}}%</td>
+							<td>{{sloc.empty}}</td>
+							<td>{{sloc.empty%}}%</td>
+							<td>{{sloc.mixed}}</td>
+							<td>{{sloc.mixed%}}%</td>
+							<td>{{sloc.total}}</td>
+						</tr>
+					{{!/if}}
+				{{/unless}}
+			{{/each}}
+		</tbody>
+	</table>
+{{else}}
+	Counting... <!--{{count}} / {{files.length}}-->
+{{/if}}

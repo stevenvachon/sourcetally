@@ -89,7 +89,7 @@ function expandDirs(files, callback)
 					
 					if (!error && expandedFiles.length)
 					{
-						// For mergeAdditions()
+						// For `mergeAdditions()`
 						additions.push({ files:expandedFiles, index:i });
 					}
 					

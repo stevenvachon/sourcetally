@@ -1,8 +1,8 @@
 {
   "private": true,
   "name": "sloc-app",
-  "description": "Source code line counter for Mac/Windows/Linux.",
-  "version": "0.0.4",
+  "description": "Source code line counter for Mac/Windows/Linux & web.",
+  "version": "0.0.5",
   "repository": {
     "type": "git",
     "url": "git://github.com/stevenvachon/sloc-app.git"

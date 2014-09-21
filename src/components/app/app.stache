@@ -1,4 +1,5 @@
 {{#switch state}}
-	{{#case "start"}}<page-start files="{files}"/>{{/case}}
-	{{#case "report"}}<page-report/>{{/case}}
+	{{#case "start"}}<page-start files="{files}" counted="{counted}" filtered="{filtered}"/>{{/case}}
+	{{#case "filter"}}<page-filter files="{files}" counted="{counted}" filtered="{filtered}"/>{{/case}}
+	{{#case "report"}}<page-report files="{files}" counted="{counted}" filtered="{filtered}"/>{{/case}}
 {{/switch}}

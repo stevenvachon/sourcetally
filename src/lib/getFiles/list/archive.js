@@ -3,7 +3,6 @@ import util from "../util";
 import globals from "lib/globals";
 
 import zip from "zip";
-import "zip/deflate";
 
 
 zip.useWebWorkers = false;
@@ -27,8 +26,7 @@ function getEntries(archive, callback, close)
 			}
 		});
 	},
-	// TODO :: figure out how to better handle this
-	function(error){ callback(error) });
+	callback);
 }
 
 

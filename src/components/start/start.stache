@@ -1,6 +1,6 @@
 <div
 	class="{{#if dragging}}dragging{{/if}} {{#if pressed}}pressed{{/if}}"
-	can-click="fileBrowser"
+	can-click="browse"
 	can-dragleave="dragOut"
 	can-dragover="dragOver"
 	can-drop="drop"
@@ -17,7 +17,7 @@
 				{{#if files.length}}disabled{{/if}}
 				{{#unless globals.web}}multiple webkitdirectory{{/unless}}
 				accept="{{#each fileTypes}}{{#if @index}},{{/if}}.{{.}}{{/each}}"
-				can-change="filesPicked"
+				can-change="change"
 			/>
 		</label>
 	</fieldset>

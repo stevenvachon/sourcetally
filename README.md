@@ -23,5 +23,8 @@ Built with [Node.js](http://nodejs.org), [node-webkit](https://github.com/rogerw
 
 ## Roadmap Features
 
-* Add support for aliases on OSX
+* Fix zip.js reading for web version
+* Fix report grid sort when switching between ascending/descending
+* Run sloc in a `Worker()`
 * Make report grid head/footer static when scrolling
+* Add support for aliases on OSX

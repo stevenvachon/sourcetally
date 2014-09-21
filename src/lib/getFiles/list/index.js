@@ -19,7 +19,7 @@ function filter(files)
 			if (file.path!="/" && file.path!="\\")
 			{
 				// If not dir
-				if (file.path.indexOf("/") != file.path.length)
+				if (file.path.indexOf("/") != file.path.length && file.path.indexOf("\\") != file.path.length)
 				{
 					if ( util.supportedExtension( file.extension, globals.attr("sourceExtensions") ) )
 					{
@@ -50,7 +50,7 @@ function list(inputFiles, callback)
 	}
 	else
 	{
-		callback([]);
+		callback(null, []);
 	}
 }
 
@@ -65,7 +65,7 @@ function populateFromArchive(inputFile, callback)
 	{
 		if (error)
 		{
-			alert(error);
+			callback(error);
 		}
 		else
 		{
@@ -80,18 +80,16 @@ function populateFromArchive(inputFile, callback)
 					name: name,
 					path: entry.filename,
 					size: entry.uncompressedSize,
+					error: null,	// If file cannot be extracted
 					
-					contents: null,	// extracted later
-					data: entry		// deleted later
+					data: entry,	// Removed later
+					archive: true,	// Used later
+					reader: reader	// Used later
 				});
 			});
-			
-			// Used later for extracting
-			files.archive = true;
-			files.reader = reader;
 		}
 		
-		callback( filter(files) );
+		callback( null, filter(files) );
 	}, false);
 }
 
@@ -103,31 +101,32 @@ function populateFromList(inputFiles, callback)
 	
 	Array.prototype.forEach.apply(inputFiles, [function(inputFile)
 	{
-		if ( globals.attr("web") )
+		// Not needed as web only accepts archives
+		/*if ( globals.attr("web") )
 		{
 			var file =
 			{
 				extension: util.extname(inputFile.name),
 				lastModifiedDate: inputFile.lastModifiedDate,
 				name: inputFile.name,
-				path: inputFile.name,	// path is restricted
+				path: inputFile.name,	// `path` is restricted
 				size: inputFile.size,
-				contents: null,	// read later
-				data: inputFile	// deleted later
+				error: null,	// If file not found later
+				data: inputFile	// Removed later
 			};
 		}
 		else
-		{
+		{*/
 			// Other meta added when dirs are expanded
 			var file = { path:inputFile.path };
-		}
+		//}
 		
 		files.push(file);
 	}]);
 	
 	if ( globals.attr("web") )
 	{
-		callback( filter(files) );
+		callback( null, filter(files) );
 	}
 	else
 	{
@@ -141,13 +140,13 @@ function populateFromList(inputFiles, callback)
 				file.lastModifiedDate = file.stats.mtime;
 				file.name = name;
 				file.size = file.stats.size;
-				file.contents = null;	// read later
+				file.error = null;	// If file not found later
 				
 				delete file.stats;
 			});
 			
 			// Files already filtered
-			callback(expandedFiles);
+			callback(null, expandedFiles);
 		});
 	}
 }

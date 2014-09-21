@@ -1,14 +1,7 @@
-//import _contents from "./contents/index";
+import _contents from "./contents";
 import _list from "./list/index";
 
 import globals from "lib/globals";
-
-
-
-function contents(something, callback)
-{
-	
-}
 
 
 
@@ -39,7 +32,7 @@ function list(event, callback)
 			inputFiles = event.dataTransfer.files;
 		//}
 	}
-	// <input type="file"/>
+	// `<input type="file"/>`
 	else if (event.srcElement.files)
 	{
 		inputFiles = event.srcElement.files;
@@ -57,4 +50,4 @@ function list(event, callback)
 
 
 
-export default { contents, list };
+export default { contents:_contents, list };

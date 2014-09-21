@@ -2,8 +2,7 @@ function extname(file, toLowerCase)
 {
 	var ext = /(?:\.([^.]+))?$/.exec(file)[1];
 	
-	if (ext && ext.toLowerCase) ext = ext.toLowerCase();
-	else ext = "";
+	ext = (ext && ext.toLowerCase) ? ext.toLowerCase() : "";
 	
 	return ext;
 }

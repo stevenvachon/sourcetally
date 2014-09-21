@@ -6,6 +6,7 @@ import "./lib/document-environment";
 import "./lib/document-focus";
 import "./lib/helper-switch";
 
+import "components/filter/filter";
 import "components/report/report";
 import "components/start/start";
 
@@ -20,18 +21,23 @@ export default can.Component.extend(
 	template: template,
 	scope:
 	{
+		counted: false,
 		files: [],
+		filtered: false,
 		globals: globals,
 		
 		state: can.compute( function()
 		{
 			if ( this.attr("files").attr("length") )
 			{
-				var temp = this.attr("files").serialize();
-				console.log(temp);
-				alert(temp[0].path+" :: "+temp[0].contents);
-				
-				return "report";
+				/*if ( this.attr("filtered") || this.attr("counted") )
+				{*/
+					return "report";
+				/*}
+				else
+				{
+					return "filter";
+				}*/
 			}
 			
 			return "start";

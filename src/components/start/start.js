@@ -2,8 +2,7 @@ import can from "can";
 import template from "./start.stache!";
 import "./start.less!";
 
-import getFiles from "./lib/getFiles/index";
-
+import getFiles from "lib/getFiles/index";
 import globals from "lib/globals";
 import nwGUI from "lib/nwGUI";
 import resizeWindow from "lib/resizeWindow";
@@ -38,6 +37,20 @@ export default can.Component.extend(
 		
 		
 		
+		browse: function(scope, element, event)
+		{
+			element.find("input[type=file]").click();
+		},
+		
+		
+		
+		change: function(scope, element, event)
+		{
+			this.getFiles(scope, element, event);
+		},
+		
+		
+		
 		dragOut: function()
 		{
 			this.attr("dragging", false);
@@ -60,47 +73,30 @@ export default can.Component.extend(
 			event.stopPropagation();
 			event.preventDefault();
 			
-			getFiles.list(event, function(files)
-			{
-				console.log(files)
-				alert( JSON.stringify(files,null,"  ") );
-				/*if (!files.length)
-				{
-					if ( this.attr("globals.web") )
-					{
-						alert("Please select a single archive ("+ this.attr("globals.archiveExtensions").join() +") file containing your source code.");
-					}
-					else
-					{
-						alert("No compatible source code file(s) found.");
-					}
-				}
-				else
-				{
-					this.attr("files", files);
-					//this.resizeWindow();
-				}*/
-			}.bind(this));
+			this.getFiles(scope, element, event);
 			
 			this.attr("dragging", false);
 		},
 		
 		
 		
-		fileBrowser: function(scope, element, event)
+		fileTypes: function()
 		{
-			element.find("input[type=file]").click();
+			// TODO :: remove serialize() when this is resolved: https://github.com/bitovi/canjs/issues/1237
+			return this.attr("globals.web") ? this.attr("globals.archiveExtensions").serialize() : this.attr("globals.sourceExtensions").serialize();
 		},
 		
 		
 		
-		filesPicked: function(scope, element, event)
+		getFiles: function(scope, element, event)
 		{
-			getFiles.list(event, function(files)
+			getFiles.list(event, function(error, files)
 			{
-				console.log(files);
-				alert( JSON.stringify(files,null,"  ") );
-				/*if (!files.length)
+				if (error)
+				{
+					alert(error);
+				}
+				else if (!files.length)
 				{
 					if ( this.attr("globals.web") )
 					{
@@ -115,16 +111,8 @@ export default can.Component.extend(
 				{
 					this.attr("files", files);
 					//this.resizeWindow();
-				}*/
+				}
 			}.bind(this));
-		},
-		
-		
-		
-		fileTypes: function()
-		{
-			// TODO :: remove serialize() when this is resolved: https://forum.javascriptmvc.com/topic/each-within-attribute-value-prints-a-function
-			return this.attr("globals.web") ? this.attr("globals.archiveExtensions").serialize() : this.attr("globals.sourceExtensions").serialize();
 		},
 		
 		
