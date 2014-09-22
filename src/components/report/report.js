@@ -6,6 +6,7 @@ import getFiles from "lib/getFiles/index";
 
 import accounting from "accounting";
 import sloc from "sloc";
+//import "can/map/sort/sort";
 
 
 
@@ -26,17 +27,17 @@ export default can.Component.extend(
 		
 		columns:
 		[
-			{ sorting:false, name:"File Name" },
-			{ sorting:false, name:"Nominal Lines" },
-			{ sorting:false, name:"Source Code Lines" },
-			{ sorting:false, name:"Source Code Lines (%)" },
-			{ sorting:false, name:"Comment Lines" },
-			{ sorting:false, name:"Comment Lines (%)" },
-			{ sorting:false, name:"Blank Lines" },
-			{ sorting:false, name:"Blank Lines (%)" },
-			{ sorting:false, name:"Mixed Lines" },
-			{ sorting:false, name:"Mixed Lines (%)" },
-			{ sorting:false, name:"Total Lines" }
+			{ sorting:false, key:"path",			name:"File Name" },
+			{ sorting:false, key:"sloc.total",		name:"Nominal Lines" },
+			{ sorting:false, key:"sloc.source",		name:"Source Code Lines" },
+			{ sorting:false, key:"sloc.source%",	name:"Source Code Lines (%)" },
+			{ sorting:false, key:"sloc.comment",	name:"Comment Lines" },
+			{ sorting:false, key:"sloc.comment%",	name:"Comment Lines (%)" },
+			{ sorting:false, key:"sloc.empty",		name:"Blank Lines" },
+			{ sorting:false, key:"sloc.empty%",		name:"Blank Lines (%)" },
+			{ sorting:false, key:"sloc.mixed",		name:"Mixed Lines" },
+			{ sorting:false, key:"sloc.mixed%",		name:"Mixed Lines (%)" },
+			{ sorting:false, key:"sloc.total",		name:"Total Lines" }
 		],
 		
 		
@@ -87,23 +88,56 @@ export default can.Component.extend(
 		
 		sortColumn: function(scope, element, event)
 		{
+			can.batch.start();
+			
 			if ( scope.attr("sorting") )
 			{
 				this.attr( "ascending", !this.attr("ascending") );
 			}
 			else
 			{
-				can.batch.start();
-				
 				this.attr("columns").forEach( function(column)
 				{
 					column.attr("sorting", false);
 				});
 				
 				scope.attr("sorting", true);
-				
-				can.batch.stop();
 			}
+			
+			var comparator = scope.attr("key");
+			
+			// TODO :: switch to `can.List.prototype.sort` when possible
+			this.attr("files", Array.prototype.sort.apply( this.attr("files"), [function(a,b)
+			{
+				a = a.attr(comparator);
+				b = b.attr(comparator);
+				
+				if ( this.attr("ascending") )
+				{
+					return a===b ? 0 : a<b ? -1 : 1;
+				}
+				else
+				{
+					return a===b ? 0 : a>b ? -1 : 1;
+				}
+			}.bind(this)]).slice(0));
+			
+			/*this.attr("files").sort( function(a, b)
+			{
+				a = a.attr(comparator);
+				b = b.attr(comparator);
+				
+				if ( this.attr("ascending") )
+				{
+					return a===b ? 0 : a<b ? -1 : 1;
+				}
+				else
+				{
+					return a===b ? 0 : a>b ? -1 : 1;
+				}
+			}.bind(this));*/
+			
+			can.batch.stop();
 		},
 		
 		

@@ -6,7 +6,7 @@
   "window": {
     "fullscreen": false,
     "resizable": true,
-    "title": "SLOC",
+    "title": "SourceTally",
     "toolbar": true,
     "width": 400,
     "height": 480

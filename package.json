@@ -1,11 +1,11 @@
 {
   "private": true,
-  "name": "sloc-app",
+  "name": "sourcetally",
   "description": "Source code line counter for Mac/Windows/Linux & web.",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "repository": {
     "type": "git",
-    "url": "git://github.com/stevenvachon/sloc-app.git"
+    "url": "git://github.com/stevenvachon/sourcetally.git"
   },
   "devDependencies": {
     "async": "~0.9",

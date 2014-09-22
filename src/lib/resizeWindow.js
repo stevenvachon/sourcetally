@@ -55,4 +55,4 @@ function resizeWindow(endWidth, endHeight, duration, callback)
 
 
 
-export default { resizeWindow };
+export default resizeWindow;
