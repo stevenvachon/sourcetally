@@ -16,7 +16,7 @@ function buildJS(callback)
 	{
 		main: "init",
 		config: "src/config.js",
-		bundlesPath: "./build/"
+		bundlesPath: "./build/web/"
 	},{
 		bundleSteal: true
 	})
@@ -29,18 +29,44 @@ function buildJS(callback)
 // Wrap production bundle(s) with node-webkit
 function buildNW(callback)
 {
-	nwbuild(
+	var pkg = require("./build/web/package.json");
+	
+	var config =
 	{
+		appName: pkg.window.title,
+		appVersion: pkg.version,
+		buildDir: "build/",
 		cacheDir: path.join(nwbuild_path,"cache"),	// same as its CLI
-		files: "build/**/**",
+		files: "build/web/**/**",
 		macIcns: "assets/logo.icns",
 		platforms: ["osx","win","linux32"],
 		version: process.argv[2] || "latest",
 		//winIco: "assets/logo.ico"
-	})
-	.build()
-	.catch(callback)
-	.then( function(){ callback() });
+	};
+	
+	nwbuild(config).build().catch(callback)
+	.then( function()
+	{
+		var annoyingPath = "build/"+config.appName;
+		var files = fs.readdirSync(annoyingPath);
+		
+		// Move build/[appName]/[platform]/ to build/[platform]
+		var count = 0;
+		files.forEach( function(file)
+		{
+			// No synchronous version (as of fs-extra v0.12)
+			fs.move( annoyingPath+"/"+file, "build/"+file, function(error)
+			{
+				if (error) throw error;
+				
+				if (++count >= files.length)
+				{
+					fs.rmdirSync(annoyingPath);
+					callback();
+				}
+			});
+		});
+	});
 }
 
 
@@ -49,7 +75,7 @@ function buildNW(callback)
 function dir(callback)
 {
 	fs.removeSync("build/");
-	fs.mkdirSync("build");
+	fs.mkdirsSync("build/web/");
 	
 	callback();
 }
@@ -59,7 +85,7 @@ function dir(callback)
 // Copy HTML file to build/
 function index(callback)
 {
-	fs.copySync("src/index-production.html", "build/index.html");
+	fs.copySync("src/index-production.html", "build/web/index.html");
 	
 	callback();
 }
@@ -76,7 +102,7 @@ function packageJson(callback)
 	packageSrc.name        = package.name;
 	packageSrc.version     = package.version;
 	
-	fs.writeJsonSync("build/package.json", packageSrc);
+	fs.writeJsonSync("build/web/package.json", packageSrc);
 	
 	callback();
 }
@@ -88,13 +114,13 @@ function npmInstall(callback)
 {
 	// TODO :: try again when --no-registry doesn't throw error
 	//exec("npm install --production --no-registry", {cwd:"build"}, callback);
-	exec("npm install --production --cache-min 99999", {cwd:"build/"}, callback);
+	exec("npm install --production --cache-min 99999", {cwd:"build/web/"}, callback);
 }
 
 
 
 // Task list
-async.series([dir,packageJson,npmInstall,index,buildJS/*,buildNW*/], function(error)
+async.series([dir,packageJson,npmInstall,index,buildJS,buildNW], function(error)
 {
 	if (error) throw error;
 });
