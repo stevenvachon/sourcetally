@@ -1,4 +1,4 @@
-{{#if counted}}
+{{#if states.counted}}
 	<table>
 		<colgroup>
 			{{#each columns}}
@@ -30,27 +30,25 @@
 			</tr>
 		</tfoot>
 		<tbody>
-			{{#each files}}
+			{{#each filteredFiles}}
 				{{#unless error}}
-					{{!#if sloc}}
-						<tr>
-							<td title="{{path}}">{{path}}</td>
-							<td>{{formatInteger sloc.total}}</td>
-							<td>{{formatInteger sloc.source}}</td>
-							<td>{{formatNumber  sloc.source%}}%</td>
-							<td>{{formatInteger sloc.comment}}</td>
-							<td>{{formatNumber  sloc.comment%}}%</td>
-							<td>{{formatInteger sloc.empty}}</td>
-							<td>{{formatNumber  sloc.empty%}}%</td>
-							<td>{{formatInteger sloc.mixed}}</td>
-							<td>{{formatNumber  sloc.mixed%}}%</td>
-							<td>{{formatInteger sloc.total}}</td>
-						</tr>
-					{{!/if}}
+					<tr>
+						<td title="{{path}}">{{path}}</td>
+						<td>{{formatInteger sloc.total}}</td>
+						<td>{{formatInteger sloc.source}}</td>
+						<td>{{formatNumber  sloc.source%}}%</td>
+						<td>{{formatInteger sloc.comment}}</td>
+						<td>{{formatNumber  sloc.comment%}}%</td>
+						<td>{{formatInteger sloc.empty}}</td>
+						<td>{{formatNumber  sloc.empty%}}%</td>
+						<td>{{formatInteger sloc.mixed}}</td>
+						<td>{{formatNumber  sloc.mixed%}}%</td>
+						<td>{{formatInteger sloc.total}}</td>
+					</tr>
 				{{/unless}}
 			{{/each}}
 		</tbody>
 	</table>
 {{else}}
-	Counting... <!--{{count}} / {{files.length}}-->
+	Counting... <!--{{count}} / {{filteredFiles.length}}-->
 {{/if}}

@@ -2,7 +2,7 @@
   "private": true,
   "name": "sourcetally",
   "description": "Source code line counter for Mac/Windows/Linux & web.",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "repository": {
     "type": "git",
     "url": "git://github.com/stevenvachon/sourcetally.git"

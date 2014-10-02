@@ -32,7 +32,7 @@ export default can.Component.extend(
 	scope:
 	{
 		dragging: false,
-		globals: globals,
+		globals: globals,	// TODO :: remove this and use globals.attr() instead of this.globals.attr() ?
 		pressed: false,
 		
 		

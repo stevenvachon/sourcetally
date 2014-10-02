@@ -21,23 +21,28 @@ export default can.Component.extend(
 	template: template,
 	scope:
 	{
-		counted: false,
 		files: [],
-		filtered: false,
+		filteredFiles: [],
 		globals: globals,
+		
+		states:
+		{
+			counted: false,
+			filtered: false
+		},
 		
 		state: can.compute( function()
 		{
 			if ( this.attr("files").attr("length") )
 			{
-				/*if ( this.attr("filtered") || this.attr("counted") )
-				{*/
+				if ( this.attr("states.filtered") || this.attr("states.counted") )
+				{
 					return "report";
-				/*}
+				}
 				else
 				{
 					return "filter";
-				}*/
+				}
 			}
 			
 			return "start";

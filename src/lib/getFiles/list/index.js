@@ -18,7 +18,7 @@ function filter(files)
 			// If not root dir
 			if (file.path!="/" && file.path!="\\")
 			{
-				// If not dir
+				// If not dir (archives have trailing slashes)
 				if (file.path.indexOf("/") != file.path.length && file.path.indexOf("\\") != file.path.length)
 				{
 					if ( util.supportedExtension( file.extension, globals.attr("sourceExtensions") ) )
@@ -84,7 +84,7 @@ function populateFromArchive(inputFile, callback)
 					
 					data: entry,	// Removed later
 					archive: true,	// Used later
-					reader: reader	// Used later
+					reader: reader,	// Used later
 				});
 			});
 		}
@@ -111,8 +111,9 @@ function populateFromList(inputFiles, callback)
 				name: inputFile.name,
 				path: inputFile.name,	// `path` is restricted
 				size: inputFile.size,
-				error: null,	// If file not found, later
-				data: inputFile	// Removed later
+				error: null,			// If file not found, later
+				
+				data: inputFile,		// Removed later
 			};
 		}
 		else
@@ -140,7 +141,7 @@ function populateFromList(inputFiles, callback)
 				file.lastModifiedDate = file.stats.mtime;
 				file.name = name;
 				file.size = file.stats.size;
-				file.error = null;	// If file not found, later
+				file.error = null;		// If file not found, later
 				
 				delete file.stats;
 			});

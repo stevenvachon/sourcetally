@@ -23,7 +23,7 @@ function contents(files, callback)
 	{
 		if ( file.attr("archive") )
 		{
-			// TODO :: find way to work with file.attr("data") statically without can.Map wrapping for safety
+			// TODO :: for safety, find way to work with file.attr("data") statically without can.Map wrapping
 			file.data.getData(new zip.TextWriter(), function(data)
 			{
 				callback(null, data, i);

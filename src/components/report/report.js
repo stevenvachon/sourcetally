@@ -46,9 +46,9 @@ export default can.Component.extend(
 		{
 			can.batch.start();
 			
-			getFiles.contents( this.attr("files"), function(error, data, fileIndex)
+			getFiles.contents( this.attr("filteredFiles"), function(error, data, fileIndex)
 			{
-				var file = this.attr("files").attr(fileIndex);
+				var file = this.attr("filteredFiles").attr(fileIndex);
 				
 				this.attr( "count", this.attr("count")+1 );
 				
@@ -69,9 +69,9 @@ export default can.Component.extend(
 					file.attr("sloc", slocData);
 				}
 				
-				if ( this.attr("count") >= this.attr("files").attr("length") )
+				if ( this.attr("count") >= this.attr("filteredFiles").attr("length") )
 				{
-					this.attr("counted", true);
+					this.attr("states").attr("counted", true);
 					can.batch.stop();
 				}
 			}.bind(this));
@@ -107,11 +107,12 @@ export default can.Component.extend(
 			var comparator = scope.attr("key");
 			
 			// TODO :: switch to `can.List.prototype.sort` when possible
-			this.attr("files", Array.prototype.sort.apply( this.attr("files"), [function(a,b)
+			this.attr("filteredFiles", Array.prototype.sort.apply( this.attr("filteredFiles"), [function(a,b)
 			{
 				a = a.attr(comparator);
 				b = b.attr(comparator);
 				
+				// TODO :: if a===b, sort by path
 				if ( this.attr("ascending") )
 				{
 					return a===b ? 0 : a<b ? -1 : 1;
@@ -153,7 +154,7 @@ export default can.Component.extend(
 				total: 0
 			};
 			
-			this.attr("files").forEach( function(file)
+			this.attr("filteredFiles").forEach( function(file)
 			{
 				totals.comment += file.attr("sloc").attr("comment");
 				totals.empty   += file.attr("sloc").attr("empty");

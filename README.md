@@ -23,6 +23,7 @@ Built with [Node.js](http://nodejs.org), [node-webkit](https://github.com/rogerw
 * Fix zip.js reading for web version
 * Fix report grid sort when switching between ascending/descending
 * Run sloc in a `Worker()`
+* Run `getFiles()` in `vn.runInNewContext()`?
 * Make report grid head/footer static when scrolling
 * Add support for aliases on OSX
 * Help fix https://github.com/google/traceur-compiler/issues/1340

@@ -1,13 +1,17 @@
+@import "components/app/variables.less";
+
+
+
 :root
 {
 	--page-report-arrow-padding: .1em;
 	--page-report-arrow-height: .35em;
 	--page-report-arrow-width: .6em;
 	
-	--page-report-border-dark: rgba(0,0,0, .125);
-	--page-report-border-light: rgba(0,0,0, .06);
-	--page-report-border-lighter: rgba(0,0,0, .045);
-	--page-report-border-lightest: rgba(0,0,0, .02);
+	--page-report-border-dark:     var(--transparent-black-dark);
+	--page-report-border-light:    var(--transparent-black-light);
+	--page-report-border-lighter:  var(--transparent-black-lighter);
+	--page-report-border-lightest: var(--transparent-black-lightest);
 	
 	--page-report-border-width-inner-horizontal: 1px;
 	--page-report-border-width-inner-vertical: 1px;
@@ -19,6 +23,8 @@
 	
 	--page-report-row-height: calc(1em + (0.1em*2) + 1px + 1px);	// text height + (paddingTop+paddingBottom) + borderBottom + paddingBottomExtra
 }
+
+
 
 page-report
 {

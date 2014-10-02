@@ -1,4 +1,93 @@
+@import "components/app/variables.less";
+
+
+
 page-filter
 {
-	
+	>fieldset
+	{
+		border: 0;
+		
+		>button
+		{
+			opacity: 0;
+			transition: opacity .5s;
+		}
+		
+		>div
+		{
+			border: 1px solid transparent;
+			display: flex;
+			flex-wrap: wrap;
+			max-height: 0;
+			overflow-x: hidden;
+			overflow-y: scroll;
+			transition: border-color .5s, max-height .5s;
+			
+			>label
+			{
+				//flex-grow: 1;
+				flex-basis: 7em;
+				opacity: 0;
+				position: relative;
+				transition: background-color .15s, opacity .5s;
+				
+				>input[type=checkbox]::after
+				{
+					background-color: var(--transparent-black-lighter);
+					content: "";
+					height: 100%;
+					left: 0;
+					opacity: 0;
+					position: absolute;
+					top: 0;
+					transition: opacity .5s;
+					width: 100%;
+					z-index: -1;
+				}
+				
+				>input[type=checkbox]:checked::after
+				{
+					opacity: 1;
+				}
+				
+				&:hover
+				{
+					background-color: var(--transparent-black-lightest);
+					transition: background-color 0s, opacity .5s;
+				}
+			}
+		}
+		
+		>p
+		{
+			font-weight: bold;
+			
+			>button
+			{
+				background: none;
+				border: 0;
+				cursor: pointer;
+			}
+		}
+		
+		&.open
+		{
+			>button
+			{
+				opacity: 1;
+			}
+			
+			>div
+			{
+				border-color: silver;
+				max-height: 5em;
+				
+				>label
+				{
+					opacity: 1;
+				}
+			}
+		}
+	}
 }
