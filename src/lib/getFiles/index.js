@@ -1,8 +1,6 @@
 import _contents from "./contents";
 import _list from "./list/index";
 
-import globals from "lib/globals";
-
 
 
 function list(event, callback)

@@ -1,4 +1,4 @@
-{{#if states.counted}}
+{{#if globals.states.counted}}
 	<table>
 		<colgroup>
 			{{#each columns}}
@@ -30,7 +30,7 @@
 			</tr>
 		</tfoot>
 		<tbody>
-			{{#each filteredFiles}}
+			{{#each globals.files.filtered}}
 				{{#unless error}}
 					<tr>
 						<td title="{{path}}">{{path}}</td>
@@ -50,5 +50,5 @@
 		</tbody>
 	</table>
 {{else}}
-	Counting... <!--{{count}} / {{filteredFiles.length}}-->
+	Counting... <!--{{count}} / {{globals.files.filtered.length}}-->
 {{/if}}

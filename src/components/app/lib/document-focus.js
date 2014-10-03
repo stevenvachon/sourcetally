@@ -33,7 +33,7 @@ if (focused) window.focus();
 // Web version doesn't work in node-webkit (?)
 switch (true)
 {
-	case globals.attr("desktop"):
+	case globals.attr("env.desktop"):
 	{
 		var nwWin = nwGUI.Window.get();
 		

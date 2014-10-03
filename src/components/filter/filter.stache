@@ -5,15 +5,13 @@
 		<button name="edit" can-click="open">Edit</button>
 	</p>
 	<div>
-		{{#each extensions}}
+		{{#each globals.extensions.codeFiltered}}
 			<label><input type="checkbox" name="selectedExtensions" value="{{extension}}" {{#if selected}}checked{{/if}} can-value="selected"/>*.{{extension}}</label>
 		{{/each}}
 	</div>
 	<button name="update" can-click="update">Update</button>
 	<button name="cancel" can-click="cancel">Cancel</button>
 </fieldset>
-
-<button name="report" can-click="report" {{#unless filteredFiles.length}}disabled{{/unless}}>Report</button>
 
 <table>
 	<colgroup>
@@ -31,8 +29,8 @@
 		</tr>
 	</thead>
 	<tbody>
-		{{#if filteredFiles.length}}
-			{{#each filteredFiles}}
+		{{#if globals.files.filtered.length}}
+			{{#each globals.files.filtered}}
 				<tr>
 					<td {{#if error}}class="error"{{/if}} title="{{path}}">{{path}}</td>
 					<td>

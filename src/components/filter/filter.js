@@ -4,8 +4,6 @@ import "./filter.less!";
 
 import "can/map/backup/backup";
 
-import globals from "lib/globals";
-
 import filesize from "filesize";
 import moment from "moment";
 
@@ -13,22 +11,31 @@ import moment from "moment";
 
 export default can.Component.extend(
 {
-	tag: "page-filter",
+	tag: "app-filter",
 	template: template,
 	
 	init: function(element)
 	{
-		var extensions = [];
-		
-		globals.sourceExtensions.forEach( function(sourceExtension)
+		// On first run, have no filter
+		if ( !this.scope.attr("globals.extensions.codeFiltered.length") )
 		{
-			extensions.push({ extension:sourceExtension, selected:true });
-		});
-		
-		can.batch.start();
-		this.scope.attr("extensions", extensions);
-		this.scope.filter();
-		can.batch.stop();
+			var extensions = [];
+			
+			this.scope.attr("globals.extensions.code").forEach( function(codeExtension)
+			{
+				extensions.push({ extension:codeExtension, selected:true });
+			});
+			
+			can.batch.start();
+			this.scope.attr("globals.extensions").attr("codeFiltered", extensions);
+			this.scope.filter();
+			can.batch.stop();
+		}
+		// Second+ run, use previous filter
+		else
+		{
+			this.scope.filter();
+		}
 	},
 	
 	scope:
@@ -48,7 +55,7 @@ export default can.Component.extend(
 		cancel: function()
 		{
 			can.batch.start();
-			this.attr("extensions").restore(true);
+			this.attr("globals.extensions.codeFiltered").restore(true);
 			this.attr("edit", false);
 			can.batch.stop();
 		},
@@ -59,9 +66,9 @@ export default can.Component.extend(
 		{
 			var filteredFiles = [];
 			
-			this.attr("files").forEach( function(file)
+			this.attr("globals.files.all").forEach( function(file)
 			{
-				this.attr("extensions").each( function(extension)
+				this.attr("globals.extensions.codeFiltered").each( function(extension)
 				{
 					if (extension.selected && file.extension==extension.extension)
 					{
@@ -73,7 +80,7 @@ export default can.Component.extend(
 			
 			// TODO :: try using can.List.prototype.filter
 			// TODO :: or figure out if it's faster to first set to [] then push(file)
-			this.attr("filteredFiles", filteredFiles);
+			this.attr("globals.files.filtered", filteredFiles);
 		},
 		
 		
@@ -82,7 +89,7 @@ export default can.Component.extend(
 		{
 			var count = 0;
 			
-			this.attr("extensions").forEach( function(extension)
+			this.attr("globals.extensions.codeFiltered").forEach( function(extension)
 			{
 				if ( extension.attr("selected") ) count++;
 			});
@@ -95,16 +102,9 @@ export default can.Component.extend(
 		open: function()
 		{
 			can.batch.start();
-			this.attr("extensions").backup();
+			this.attr("globals.extensions.codeFiltered").backup();
 			this.attr("edit", true);
 			can.batch.stop();
-		},
-		
-		
-		
-		report: function()
-		{
-			this.attr("states").attr("filtered", true);
 		},
 		
 		
@@ -115,7 +115,7 @@ export default can.Component.extend(
 			
 			this.attr("edit", false);
 			
-			if ( this.attr("extensions").isDirty() )
+			if ( this.attr("globals.extensions.codeFiltered").isDirty() )
 			{
 				this.filter();
 			}

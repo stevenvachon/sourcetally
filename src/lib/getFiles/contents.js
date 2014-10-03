@@ -5,7 +5,7 @@ import "zip/inflate";
 
 var fs;
 
-if ( !globals.attr("web") )
+if ( !globals.attr("env.web") )
 {
 	fs = window.requireNode("fs");
 }

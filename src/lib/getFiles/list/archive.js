@@ -35,7 +35,7 @@ function isArchive(inputFile, callback)
 {
 	var ext = util.extname( util.filename(inputFile.name) );
 	
-	return util.supportedExtension( ext, globals.attr("archiveExtensions") );
+	return util.supportedExtension( ext, globals.attr("extensions.archives") );
 }
 
 

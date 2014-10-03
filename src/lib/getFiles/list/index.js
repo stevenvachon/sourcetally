@@ -21,7 +21,7 @@ function filter(files)
 				// If not dir (archives have trailing slashes)
 				if (file.path.indexOf("/") != file.path.length && file.path.indexOf("\\") != file.path.length)
 				{
-					if ( util.supportedExtension( file.extension, globals.attr("sourceExtensions") ) )
+					if ( util.supportedExtension( file.extension, globals.attr("extensions.code") ) )
 					{
 						filtered.push(file);
 					}
@@ -44,7 +44,7 @@ function list(inputFiles, callback)
 	}
 	// Web cannot access path to file
 	// Web cannot distinguish files from dirs
-	else if ( !globals.attr("web") )
+	else if ( !globals.attr("env.web") )
 	{
 		populateFromList(inputFiles, callback);
 	}
@@ -102,7 +102,7 @@ function populateFromList(inputFiles, callback)
 	Array.prototype.forEach.apply(inputFiles, [function(inputFile)
 	{
 		// Not needed as web only accepts archives
-		/*if ( globals.attr("web") )
+		/*if ( globals.attr("env.web") )
 		{
 			var file =
 			{
@@ -125,7 +125,7 @@ function populateFromList(inputFiles, callback)
 		files.push(file);
 	}]);
 	
-	if ( globals.attr("web") )
+	if ( globals.attr("env.web") )
 	{
 		callback( null, filter(files) );
 	}

@@ -12,12 +12,16 @@ import sloc from "sloc";
 
 export default can.Component.extend(
 {
-	tag: "page-report",
+	tag: "app-report",
 	template: template,
 	
 	init: function()
 	{
-		this.scope.countFiles();
+		// Give interface time to become visible before starting the (currently heavy) counting
+		setTimeout( function()
+		{
+			this.scope.countFiles();
+		}.bind(this));
 	},
 	
 	scope:
@@ -46,9 +50,9 @@ export default can.Component.extend(
 		{
 			can.batch.start();
 			
-			getFiles.contents( this.attr("filteredFiles"), function(error, data, fileIndex)
+			getFiles.contents( this.attr("globals.files.filtered"), function(error, data, fileIndex)
 			{
-				var file = this.attr("filteredFiles").attr(fileIndex);
+				var file = this.attr("globals.files.filtered").attr(fileIndex);
 				
 				this.attr( "count", this.attr("count")+1 );
 				
@@ -69,9 +73,9 @@ export default can.Component.extend(
 					file.attr("sloc", slocData);
 				}
 				
-				if ( this.attr("count") >= this.attr("filteredFiles").attr("length") )
+				if ( this.attr("count") >= this.attr("globals.files.filtered").attr("length") )
 				{
-					this.attr("states").attr("counted", true);
+					this.attr("globals.states").attr("counted", true);
 					can.batch.stop();
 				}
 			}.bind(this));
@@ -107,7 +111,7 @@ export default can.Component.extend(
 			var comparator = scope.attr("key");
 			
 			// TODO :: switch to `can.List.prototype.sort` when possible
-			this.attr("filteredFiles", Array.prototype.sort.apply( this.attr("filteredFiles"), [function(a,b)
+			this.attr("globals.files.filtered", Array.prototype.sort.apply( this.attr("globals.files.filtered"), [function(a,b)
 			{
 				a = a.attr(comparator);
 				b = b.attr(comparator);
@@ -154,7 +158,7 @@ export default can.Component.extend(
 				total: 0
 			};
 			
-			this.attr("filteredFiles").forEach( function(file)
+			this.attr("globals.files.filtered").forEach( function(file)
 			{
 				totals.comment += file.attr("sloc").attr("comment");
 				totals.empty   += file.attr("sloc").attr("empty");

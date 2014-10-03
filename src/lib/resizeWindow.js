@@ -5,15 +5,21 @@ function linearTween(t, b, c, d)
 
 
 
+// endWidth and endHeight are DOCUMENT sizes
 function resizeWindow(endWidth, endHeight, duration, callback)
 {
+	if (typeof duration != "number") duration = 650;
+	
 	var startWidth  = window.outerWidth;
 	var startHeight = window.outerHeight;
 	var startX = window.screenX;
 	var startY = window.screenY;
 	
-	var widthChange = endWidth - startWidth;
-	var heightChange = endHeight - startHeight;
+	var chromeWidthDiff  = startWidth  - window.innerWidth;
+	var chromeHeightDiff = startHeight - window.innerHeight;
+	
+	var widthChange  = endWidth  + chromeWidthDiff  - startWidth;
+	var heightChange = endHeight + chromeHeightDiff - startHeight;
 	
 	var endX = startX - Math.round(widthChange/2);
 	var endY = startY - Math.round(heightChange/2);
@@ -50,7 +56,14 @@ function resizeWindow(endWidth, endHeight, duration, callback)
 		}
 	}
 	
-	requestAnimationFrame(step);
+	if (widthChange!=0 || heightChange!=0)
+	{
+		requestAnimationFrame(step);
+	}
+	else if (callback)
+	{
+		callback();
+	}
 }
 
 

@@ -1,5 +1,7 @@
 {{#switch state}}
-	{{#case "start"}}<page-start files="{files}" filtered-files="{filteredFiles}" states="{states}"/>{{/case}}
-	{{#case "filter"}}<page-filter files="{files}" filtered-files="{filteredFiles}" states="{states}"/>{{/case}}
-	{{#case "report"}}<page-report files="{files}" filtered-files="{filteredFiles}" states="{states}"/>{{/case}}
+	{{#case "filter" "report"}}<app-toolbar globals="{globals}"/>{{/case}}
+	
+	{{#case "start"}}<app-start globals="{globals}"/>{{/case}}
+	{{#case "filter"}}<app-filter globals="{globals}"/>{{/case}}
+	{{#case "report"}}<app-report globals="{globals}"/>{{/case}}
 {{/switch}}

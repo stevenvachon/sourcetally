@@ -4,7 +4,7 @@ import nwGUI from "./nwGUI";
 
 
 // Node-WebKit has context menus disabled
-if ( globals.attr("desktop") )
+if ( globals.attr("env.desktop") )
 {
 	var nwMenu = new nwGUI.Menu();
 	var nwMenuItem = nwGUI.MenuItem;

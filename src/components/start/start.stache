@@ -8,14 +8,14 @@
 >
 	<fieldset>
 		<i><!-- icon --></i>
-		<span>Drag {{#if globals.web}}Zip File{{else}}Files{{/if}} Here to Analyze</span>
+		<span>Drag {{#if globals.env.web}}Zip File{{else}}Files{{/if}} Here to Analyze</span>
 		<span class="hidden">or</span>
 		<label can-click="stopPropagation">
 			<span>Click Here to Analyze</span>
 			<input
 				type="file"
-				{{#if files.length}}disabled{{/if}}
-				{{#unless globals.web}}multiple webkitdirectory{{/unless}}
+				{{#if globals.files.all.length}}disabled{{/if}}
+				{{#unless globals.env.web}}multiple webkitdirectory{{/unless}}
 				accept="{{#each fileTypes}}{{#if @index}},{{/if}}.{{.}}{{/each}}"
 				can-change="change"
 			/>

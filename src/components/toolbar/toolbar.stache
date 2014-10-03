@@ -1,0 +1,12 @@
+{{#if globals.states.filtered}}
+	{{! Back to Filter }}
+	<button name="filter" can-click="filter">Filter</button>
+{{else}}
+	{{! Back to Start }}
+	<button name="start" can-click="start">Start</button>
+{{/if}}
+
+{{#unless globals.states.filtered}}
+	{{! Forward to Report }}
+	<button name="report" can-click="report" {{#unless globals.files.filtered.length}}disabled{{/unless}}>Report</button>
+{{/unless}}

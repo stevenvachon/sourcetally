@@ -4,7 +4,7 @@ var fs;
 var path;
 var walk;
 
-if ( !globals.attr("web") )
+if ( !globals.attr("env.web") )
 {
 	fs   = window.requireNode("fs");
 	path = window.requireNode("path");

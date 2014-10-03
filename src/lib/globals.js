@@ -29,12 +29,31 @@ else
 
 export default new can.Map(
 {
-	env: env,
+	env:
+	{
+		envString: env,
+		
+		desktop: (env == DESKTOP),
+		//mobile:  (env == MOBILE),
+		web:     (env == WEB)
+	},
 	
-	archiveExtensions: ["zip"],
-	sourceExtensions: sloc.extensions,
+	extensions:
+	{
+		archives: ["zip"],
+		code: sloc.extensions,
+		codeFiltered: []	// Extensions filtered by user
+	},
 	
-	desktop: (env == DESKTOP),
-	//mobile:  (env == MOBILE),
-	web:     (env == WEB)
+	files:
+	{
+		all: [],			// All imported files
+		filtered: []		// Files filtered by extensions.codeFiltered
+	},
+	
+	states:
+	{
+		counted: false,		// If all files have had their sloc counted
+		filtered: false		// If an extension filter has been selected for files
+	}
 });

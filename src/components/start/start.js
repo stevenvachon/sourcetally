@@ -2,8 +2,8 @@ import can from "can";
 import template from "./start.stache!";
 import "./start.less!";
 
+import fullscreen from "lib/fullscreen";
 import getFiles from "lib/getFiles/index";
-import globals from "lib/globals";
 import nwGUI from "lib/nwGUI";
 import resizeWindow from "lib/resizeWindow";
 
@@ -13,26 +13,29 @@ var nwWin;
 
 export default can.Component.extend(
 {
-	tag: "page-start",
+	tag: "app-start",
 	template: template,
 	
 	init: function()
 	{
-		/*if ( globals.attr("desktop") )
+		// When not first run
+		fullscreen.exit();
+		
+		if ( this.scope.attr("globals.env.desktop") )
 		{
-			nwWin = nwGUI.Window.get();
+			// If first run
+			if (!nwWin) nwWin = nwGUI.Window.get();
 			
-			// Set window properties in case returning to this page
+			// When not first run
 			nwWin.setResizable(false);
-			
 			// TODO :: disable fullscreen control
-		}*/
+			resizeWindow(400, 480);
+		}
 	},
 	
 	scope:
 	{
 		dragging: false,
-		globals: globals,	// TODO :: remove this and use globals.attr() instead of this.globals.attr() ?
 		pressed: false,
 		
 		
@@ -82,21 +85,22 @@ export default can.Component.extend(
 		
 		fileTypes: function()
 		{
-			if ( this.attr("globals.web") )
+			if ( this.attr("globals.env.web") )
 			{
 				// TODO :: remove serialize() when this is resolved: https://github.com/bitovi/canjs/issues/1237
-				return this.attr("globals.archiveExtensions").serialize();
+				return this.attr("globals.extensions.archives").serialize();
 			}
 			else
 			{
 				var extensions = [];
 				
-				this.attr("globals.sourceExtensions").forEach( function(sourceExtension)
+				// TODO :: switch to a single Array.prototype.concat() for both ?
+				this.attr("globals.extensions.code").forEach( function(codeExtension)
 				{
-					extensions.push(sourceExtension);
+					extensions.push(codeExtension);
 				});
 				
-				this.attr("globals.archiveExtensions").forEach( function(archiveExtension)
+				this.attr("globals.extensions.archives").forEach( function(archiveExtension)
 				{
 					extensions.push(archiveExtension);
 				});
@@ -117,9 +121,9 @@ export default can.Component.extend(
 				}
 				else if (!files.length)
 				{
-					if ( this.attr("globals.web") )
+					if ( this.attr("globals.env.web") )
 					{
-						alert("Please select a single archive ("+ this.attr("globals.archiveExtensions").join() +") file containing your source code.");
+						alert("Please select a single archive ("+ this.attr("globals.extensions.archives").join() +") file containing your source code.");
 					}
 					else
 					{
@@ -128,8 +132,19 @@ export default can.Component.extend(
 				}
 				else
 				{
-					this.attr("files", files);
-					//this.resizeWindow();
+					if ( this.attr("globals.env.desktop") )
+					{
+						resizeWindow(1070, 680, null, function()
+						{
+							nwWin.setResizable(true);
+							// TODO :: re-enable fullscreen control
+							this.attr("globals.files.all", files);
+						}.bind(this));
+					}
+					else
+					{
+						this.attr("globals.files.all", files);
+					}
 				}
 			}.bind(this));
 		},
@@ -157,18 +172,6 @@ export default can.Component.extend(
 				this.attr("pressed", false);
 				can.off.call(window, "mousemove");
 				can.off.call(window, "mouseup");
-			}.bind(this));
-		},
-		
-		
-		
-		resizeWindow: function()
-		{
-			resizeWindow(1070,680, 650, function()
-			{
-				//nwWin.setResizable(true);
-				// TODO :: re-enable fullscreen control
-				console.log( "DONE", this.attr("files") );
 			}.bind(this));
 		},
 		
