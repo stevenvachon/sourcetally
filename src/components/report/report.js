@@ -31,17 +31,17 @@ export default can.Component.extend(
 		
 		columns:
 		[
-			{ sorting:false, key:"path",			name:"File Name" },
-			{ sorting:false, key:"sloc.total",		name:"Nominal Lines" },
-			{ sorting:false, key:"sloc.source",		name:"Source Code Lines" },
-			{ sorting:false, key:"sloc.source%",	name:"Source Code Lines (%)" },
-			{ sorting:false, key:"sloc.comment",	name:"Comment Lines" },
-			{ sorting:false, key:"sloc.comment%",	name:"Comment Lines (%)" },
-			{ sorting:false, key:"sloc.empty",		name:"Blank Lines" },
-			{ sorting:false, key:"sloc.empty%",		name:"Blank Lines (%)" },
-			{ sorting:false, key:"sloc.mixed",		name:"Mixed Lines" },
-			{ sorting:false, key:"sloc.mixed%",		name:"Mixed Lines (%)" },
-			{ sorting:false, key:"sloc.total",		name:"Total Lines" }
+			{ sorting:false, key:"path",          name:"File Name" },
+			{ sorting:false, key:"sloc.total",    name:"Nominal Lines" },
+			{ sorting:false, key:"sloc.source",   name:"Source Code Lines" },
+			{ sorting:false, key:"sloc.source%",  name:"Source Code Lines (%)" },
+			{ sorting:false, key:"sloc.comment",  name:"Comment Lines" },
+			{ sorting:false, key:"sloc.comment%", name:"Comment Lines (%)" },
+			{ sorting:false, key:"sloc.empty",    name:"Blank Lines" },
+			{ sorting:false, key:"sloc.empty%",   name:"Blank Lines (%)" },
+			{ sorting:false, key:"sloc.mixed",    name:"Mixed Lines" },
+			{ sorting:false, key:"sloc.mixed%",   name:"Mixed Lines (%)" },
+			{ sorting:false, key:"sloc.total",    name:"Total Lines" }
 		],
 		
 		
@@ -132,6 +132,7 @@ export default can.Component.extend(
 				a = a.attr(comparator);
 				b = b.attr(comparator);
 				
+				// TODO :: if a===b, sort by path
 				if ( this.attr("ascending") )
 				{
 					return a===b ? 0 : a<b ? -1 : 1;

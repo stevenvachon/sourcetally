@@ -142,6 +142,8 @@ export default can.Component.extend(
 		formatFileSize: function(bytes, options)
 		{
 			if ( can.isFunction(bytes) ) bytes = bytes();
+			var size = filesize(bytes, {suffixes:{kB:"KB"}});
+			var space = size.indexOf(" ");
 			
 			var units = {
 				B: "Bytes",
@@ -155,10 +157,9 @@ export default can.Component.extend(
 				YB: "Yottabytes"
 			};
 			
-			var size = filesize(bytes, {output:Object, round:2, suffixes:{kB:"KB"}});
-			var unitLong = units[size.suffix];
-			var unitShort = size.suffix;
-			var value = parseFloat(size.value);
+			var value = parseFloat( size.substring(0,space) );
+			var unitShort = size.substring(space+1);
+			var unitLong = units[unitShort];
 			
 			switch (unitShort)
 			{

@@ -18,7 +18,7 @@ function filename(file)
 
 function supportedExtension(ext, extensions)
 {
-	if (ext.indexOf(".")==0) ext = ext.substr(1);
+	if (ext.indexOf(".")==0) ext = ext.substring(1);
 	ext = ext.toLowerCase();
 	
 	var supported = false;

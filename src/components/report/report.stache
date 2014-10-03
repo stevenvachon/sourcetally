@@ -1,19 +1,19 @@
-{{#if globals.states.counted}}
-	<table>
-		<colgroup>
+<table>
+	<colgroup>
+		{{#each columns}}
+			<col class="{{#if sorting}}sort-{{#if ascending}}ascend{{else}}descend{{/if}}{{/if}}"/>
+		{{/each}}
+	</colgroup>
+	<thead>
+		<tr>
 			{{#each columns}}
-				<col class="{{#if sorting}}sort-{{#if ascending}}ascend{{else}}descend{{/if}}{{/if}}"/>
+				<th class="{{#if sorting}}sort-{{#if ascending}}ascend{{else}}descend{{/if}}{{/if}}" can-click="sortColumn">
+					{{name}}
+				</th>
 			{{/each}}
-		</colgroup>
-		<thead>
-			<tr>
-				{{#each columns}}
-					<th class="{{#if sorting}}sort-{{#if ascending}}ascend{{else}}descend{{/if}}{{/if}}" can-click="sortColumn">
-						{{name}}
-					</th>
-				{{/each}}
-			</tr>
-		</thead>
+		</tr>
+	</thead>
+	{{#if globals.states.counted}}
 		<tfoot>
 			<tr>
 				<th>Total:</th>
@@ -31,7 +31,21 @@
 		</tfoot>
 		<tbody>
 			{{#each globals.files.filtered}}
-				{{#unless error}}
+				{{#if error}}
+					<tr class="error">
+						<td title="{{path}}">{{path}}</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+						<td>-</td>
+					</tr>
+				{{else}}
 					<tr>
 						<td title="{{path}}">{{path}}</td>
 						<td>{{formatInteger sloc.total}}</td>
@@ -45,10 +59,14 @@
 						<td>{{formatNumber  sloc.mixed%}}%</td>
 						<td>{{formatInteger sloc.total}}</td>
 					</tr>
-				{{/unless}}
+				{{/if}}
 			{{/each}}
 		</tbody>
-	</table>
-{{else}}
-	Counting... <!--{{count}} / {{globals.files.filtered.length}}-->
-{{/if}}
+	{{else}}
+		<tbody>
+			<tr>
+				<td colspan="{{columns.length}}">Counting... <!--{{count}} / {{globals.files.filtered.length}}--></td>
+			</tr>
+		<tbody>
+	{{/if}}
+</table>
