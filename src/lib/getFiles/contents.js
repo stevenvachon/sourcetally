@@ -21,30 +21,35 @@ function contents(files, callback)
 	
 	files.forEach( function(file, i)
 	{
-		if ( file.attr("archive") )
+		if ( !file.attr("excluded") && !file.attr("error") )
 		{
-			// TODO :: for safety, find way to work with file.attr("data") statically without can.Map wrapping
-			file.data.getData(new zip.TextWriter(), function(data)
+			if ( file.attr("archive") )
 			{
-				callback(null, data, i);
-				
-				if ( ++count >= files.attr("length") )
+				// TODO :: for safety, find way to work with file.attr("data") statically without can.Map wrapping
+				file.data.getData(new zip.TextWriter(), function(data)
 				{
-					// TODO :: don't store reader on file
-					// can't store on `files` as it gets removed once turned into a can.List
-					file.attr("reader").close();
-				}
-			},
-			function(){});	// Progress callback.. errors without it
-			
-			// TODO :: figure out how to capture errors.. it's currently back in list/archive on the reader
-		}
-		else
-		{
-			fs.readFile( file.attr("path"), {encoding:"utf8"}, function(error, data)
+					callback(null, data, i);
+					
+					if ( ++count >= files.attr("length") )
+					{
+						// TODO :: don't store reader on file
+						// can't store on `files` as it gets removed once turned into a can.List
+						file.attr("reader").close();
+						
+						// TODO :: figure out why getData() still works even after running close()
+					}
+				},
+				function(){});	// Progress callback.. errors without it
+				
+				// TODO :: figure out how to capture errors.. it's currently back in list/archive on the reader
+			}
+			else
 			{
-				callback(error, data, i);
-			});
+				fs.readFile( file.attr("path"), {encoding:"utf8"}, function(error, data)
+				{
+					callback(error, data, i);
+				});
+			}
 		}
 	});
 }

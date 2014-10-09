@@ -26,7 +26,7 @@ export default can.Component.extend(
 		
 		state: can.compute( function()
 		{
-			if ( this.attr("globals.files.all").attr("length") )
+			if ( this.attr("globals.files").attr("length") )
 			{
 				if ( this.attr("globals.states.filtered") || this.attr("globals.states.counted") )
 				{

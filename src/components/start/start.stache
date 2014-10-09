@@ -14,9 +14,9 @@
 			<span>Click Here to Analyze</span>
 			<input
 				type="file"
-				{{#if globals.files.all.length}}disabled{{/if}}
+				{{#if globals.files.length}}disabled{{/if}}
 				{{#unless globals.env.web}}multiple webkitdirectory{{/unless}}
-				accept="{{#each fileTypes}}{{#if @index}},{{/if}}.{{.}}{{/each}}"
+				accept="{{fileTypes}}"
 				can-change="change"
 			/>
 		</label>

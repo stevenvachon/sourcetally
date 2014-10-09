@@ -5,12 +5,13 @@
 		<button name="edit" can-click="open">Edit</button>
 	</p>
 	<div>
-		{{#each globals.extensions.codeFiltered}}
-			<label><input type="checkbox" name="selectedExtensions" value="{{extension}}" {{#if selected}}checked{{/if}} can-value="selected"/>*.{{extension}}</label>
+		{{#each globals.extensions.code}}
+			<label><input type="checkbox" name="selectedExtensions" {{#if selected}}checked{{/if}} can-value="selected"/>*.{{@key}}</label>
 		{{/each}}
 	</div>
 	<button name="update" can-click="update">Update</button>
 	<button name="cancel" can-click="cancel">Cancel</button>
+	<label><input type="checkbox" name="selectAll" can-value="allSelected" can-click="toggleAll">Select all</label>
 </fieldset>
 
 <table>
@@ -29,26 +30,36 @@
 		</tr>
 	</thead>
 	<tbody>
-		{{#if globals.files.filtered.length}}
-			{{#each globals.files.filtered}}
-				<tr>
-					<td {{#if error}}class="error"{{/if}} title="{{path}}">{{path}}</td>
-					<td>
-						{{#formatFileSize size}}
-							{{value}}
-							{{#if unitShort}}
-								<abbr title="{{unitLong}}">{{unitShort}}</abbr>
-							{{else}}
-								<span style="text-transform:lowercase">{{unitLong}}</span>
-							{{/if}}
-						{{/formatFileSize}}
-					</td>
-					<td>
-						<time datetime="{{formatDate lastModifiedDate 'iso'}}" title="{{formatDate lastModifiedDate 'dddd, MMMM D, YYYY [at] h:mm A'}}">
-							{{formatDate lastModifiedDate 'MM/DD/YYYY'}}
-						</time>
-					</td>
-				</tr>
+		{{#if globals.numFilesFiltered}}
+			{{#each globals.files}}
+				{{#if included}}
+					{{#if error}}
+						<tr>
+							<td class="error" title="{{path}}">{{path}}</td>
+							<td>-</td>
+							<td>-</td>
+						</tr>
+					{{else}}
+						<tr>
+							<td title="{{path}}">{{path}}</td>
+							<td>
+								{{#formatFileSize size}}
+									{{value}}
+									{{#if unitShort}}
+										<abbr title="{{unitLong}}">{{unitShort}}</abbr>
+									{{else}}
+										<span style="text-transform:lowercase">{{unitLong}}</span>
+									{{/if}}
+								{{/formatFileSize}}
+							</td>
+							<td>
+								<time datetime="{{formatDate lastModifiedDate 'iso'}}" title="{{formatDate lastModifiedDate 'dddd, MMMM D, YYYY [at] h:mm A'}}">
+									{{formatDate lastModifiedDate 'MM/DD/YYYY'}}
+								</time>
+							</td>
+						</tr>
+					{{/if}}
+				{{/if}}
 			{{/each}}
 		{{else}}
 			<tr>

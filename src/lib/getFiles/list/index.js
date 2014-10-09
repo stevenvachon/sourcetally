@@ -80,6 +80,7 @@ function populateFromArchive(inputFile, callback)
 					name: name,
 					path: entry.filename,
 					size: entry.uncompressedSize,
+					included: true,	// For filtering
 					error: null,	// If file cannot be extracted, later
 					
 					data: entry,	// Removed later
@@ -89,6 +90,7 @@ function populateFromArchive(inputFile, callback)
 			});
 		}
 		
+		// TODO :: integrate files() into above loop
 		callback( null, filter(files) );
 	}, false);
 }
@@ -111,6 +113,7 @@ function populateFromList(inputFiles, callback)
 				name: inputFile.name,
 				path: inputFile.name,	// `path` is restricted
 				size: inputFile.size,
+				included: true,			// For filtering
 				error: null,			// If file not found, later
 				
 				data: inputFile,		// Removed later
@@ -141,6 +144,7 @@ function populateFromList(inputFiles, callback)
 				file.lastModifiedDate = file.stats.mtime;
 				file.name = name;
 				file.size = file.stats.size;
+				file.included = true;	// For filtering
 				file.error = null;		// If file not found, later
 				
 				delete file.stats;

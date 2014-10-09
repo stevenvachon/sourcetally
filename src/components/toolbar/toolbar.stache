@@ -8,5 +8,5 @@
 
 {{#unless globals.states.filtered}}
 	{{! Forward to Report }}
-	<button name="report" can-click="report" {{#unless globals.files.filtered.length}}disabled{{/unless}}>Report</button>
+	<button name="report" can-click="report" {{#unless globals.numFilesFiltered}}disabled{{/unless}}>Report</button>
 {{/unless}}

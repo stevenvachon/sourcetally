@@ -30,42 +30,44 @@
 			</tr>
 		</tfoot>
 		<tbody>
-			{{#each globals.files.filtered}}
-				{{#if error}}
-					<tr class="error">
-						<td title="{{path}}">{{path}}</td>
-						<td>-</td>
-						<td>-</td>
-						<td>-</td>
-						<td>-</td>
-						<td>-</td>
-						<td>-</td>
-						<td>-</td>
-						<td>-</td>
-						<td>-</td>
-						<td>-</td>
-					</tr>
-				{{else}}
-					<tr>
-						<td title="{{path}}">{{path}}</td>
-						<td>{{formatInteger sloc.total}}</td>
-						<td>{{formatInteger sloc.source}}</td>
-						<td>{{formatNumber  sloc.source%}}%</td>
-						<td>{{formatInteger sloc.comment}}</td>
-						<td>{{formatNumber  sloc.comment%}}%</td>
-						<td>{{formatInteger sloc.empty}}</td>
-						<td>{{formatNumber  sloc.empty%}}%</td>
-						<td>{{formatInteger sloc.mixed}}</td>
-						<td>{{formatNumber  sloc.mixed%}}%</td>
-						<td>{{formatInteger sloc.total}}</td>
-					</tr>
+			{{#each globals.files}}
+				{{#if included}}
+					{{#if error}}
+						<tr class="error">
+							<td title="{{path}}">{{path}}</td>
+							<td>-</td>
+							<td>-</td>
+							<td>-</td>
+							<td>-</td>
+							<td>-</td>
+							<td>-</td>
+							<td>-</td>
+							<td>-</td>
+							<td>-</td>
+							<td>-</td>
+						</tr>
+					{{else}}
+						<tr>
+							<td title="{{path}}">{{path}}</td>
+							<td>{{formatInteger sloc.total}}</td>
+							<td>{{formatInteger sloc.source}}</td>
+							<td>{{formatNumber  sloc.source%}}%</td>
+							<td>{{formatInteger sloc.comment}}</td>
+							<td>{{formatNumber  sloc.comment%}}%</td>
+							<td>{{formatInteger sloc.empty}}</td>
+							<td>{{formatNumber  sloc.empty%}}%</td>
+							<td>{{formatInteger sloc.mixed}}</td>
+							<td>{{formatNumber  sloc.mixed%}}%</td>
+							<td>{{formatInteger sloc.total}}</td>
+						</tr>
+					{{/if}}
 				{{/if}}
 			{{/each}}
 		</tbody>
 	{{else}}
 		<tbody>
 			<tr>
-				<td colspan="{{columns.length}}">Counting... <!--{{count}} / {{globals.files.filtered.length}}--></td>
+				<td colspan="{{columns.length}}">Counting... <!--{{count}} / {{globals.numFilesFiltered}}--></td>
 			</tr>
 		<tbody>
 	{{/if}}

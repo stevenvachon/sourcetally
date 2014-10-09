@@ -16,32 +16,12 @@ export default can.Component.extend(
 	
 	init: function(element)
 	{
-		// On first run, have no filter
-		if ( !this.scope.attr("globals.extensions.codeFiltered.length") )
-		{
-			var extensions = [];
-			
-			this.scope.attr("globals.extensions.code").forEach( function(codeExtension)
-			{
-				extensions.push({ extension:codeExtension, selected:true });
-			});
-			
-			can.batch.start();
-			this.scope.attr("globals.extensions").attr("codeFiltered", extensions);
-			this.scope.filter();
-			can.batch.stop();
-		}
-		// Second+ run, use previous filter
-		else
-		{
-			this.scope.filter();
-		}
+		this.scope.filter();
 	},
 	
 	scope:
 	{
 		edit: false,
-		extensions: [],
 		
 		columns:
 		[
@@ -52,10 +32,28 @@ export default can.Component.extend(
 		
 		
 		
+		allSelected: can.compute( function()
+		{
+			var _allSelected = true;
+			
+			this.attr("globals.extensions.code").each( function(extension)
+			{
+				if ( !extension.attr("selected") )
+				{
+					_allSelected = false;
+					return false;
+				}
+			});
+			
+			return _allSelected;
+		}),
+		
+		
+		
 		cancel: function()
 		{
 			can.batch.start();
-			this.attr("globals.extensions.codeFiltered").restore(true);
+			this.attr("globals.extensions.code").restore(true);
 			this.attr("edit", false);
 			can.batch.stop();
 		},
@@ -64,23 +62,23 @@ export default can.Component.extend(
 		
 		filter: function()
 		{
-			var filteredFiles = [];
+			can.batch.start();
 			
-			this.attr("globals.files.all").forEach( function(file)
+			var count = 0;
+			
+			this.attr("globals.files").forEach( function(file)
 			{
-				this.attr("globals.extensions.codeFiltered").each( function(extension)
-				{
-					if (extension.selected && file.extension==extension.extension)
-					{
-						filteredFiles.push(file);
-						return false;
-					}
-				});
+				var extension = this.attr("globals.extensions.code").attr(file.extension);
+				var included = (extension && extension.selected);
+				
+				file.attr("included", included);
+				
+				if (included) count++;
 			}, this);
 			
-			// TODO :: try using can.List.prototype.filter
-			// TODO :: or figure out if it's faster to first set to [] then push(file)
-			this.attr("globals.files.filtered", filteredFiles);
+			this.attr("globals").attr("numFilesFiltered", count);
+			
+			can.batch.stop();
 		},
 		
 		
@@ -89,7 +87,7 @@ export default can.Component.extend(
 		{
 			var count = 0;
 			
-			this.attr("globals.extensions.codeFiltered").forEach( function(extension)
+			this.attr("globals.extensions.code").each( function(extension)
 			{
 				if ( extension.attr("selected") ) count++;
 			});
@@ -102,8 +100,24 @@ export default can.Component.extend(
 		open: function()
 		{
 			can.batch.start();
-			this.attr("globals.extensions.codeFiltered").backup();
+			this.attr("globals.extensions.code").backup();
 			this.attr("edit", true);
+			can.batch.stop();
+		},
+		
+		
+		
+		toggleAll: function()
+		{
+			can.batch.start();
+			
+			var newValue = !this.attr("allSelected");
+			
+			this.attr("globals.extensions.code").each( function(extension)
+			{
+				extension.attr("selected", newValue);
+			});
+			
 			can.batch.stop();
 		},
 		
@@ -115,7 +129,7 @@ export default can.Component.extend(
 			
 			this.attr("edit", false);
 			
-			if ( this.attr("globals.extensions.codeFiltered").isDirty() )
+			if ( this.attr("globals.extensions.code").isDirty(true) )
 			{
 				this.filter();
 			}

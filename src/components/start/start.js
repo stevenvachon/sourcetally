@@ -85,28 +85,24 @@ export default can.Component.extend(
 		
 		fileTypes: function()
 		{
-			if ( this.attr("globals.env.web") )
+			var output = "";
+			
+			if ( !this.attr("globals.env.web") )
 			{
-				// TODO :: remove serialize() when this is resolved: https://github.com/bitovi/canjs/issues/1237
-				return this.attr("globals.extensions.archives").serialize();
+				this.attr("globals.extensions.code").each( function(value, key)
+				{
+					if (output) output += ",";
+					output += key;
+				});
 			}
-			else
+			
+			this.attr("globals.extensions.archives").each( function(value, key)
 			{
-				var extensions = [];
-				
-				// TODO :: switch to a single Array.prototype.concat() for both ?
-				this.attr("globals.extensions.code").forEach( function(codeExtension)
-				{
-					extensions.push(codeExtension);
-				});
-				
-				this.attr("globals.extensions.archives").forEach( function(archiveExtension)
-				{
-					extensions.push(archiveExtension);
-				});
-				
-				return extensions;
-			}
+				if (output) output += ",";
+				output += key;
+			});
+			
+			return output;
 		},
 		
 		
@@ -123,7 +119,9 @@ export default can.Component.extend(
 				{
 					if ( this.attr("globals.env.web") )
 					{
-						alert("Please select a single archive ("+ this.attr("globals.extensions.archives").join() +") file containing your source code.");
+						var archiveTypes = can.Map.keys( this.attr("globals.extensions.archives") ).join();
+						
+						alert("Please select a single archive ("+ archiveTypes +") file containing your source code.");
 					}
 					else
 					{
@@ -138,12 +136,12 @@ export default can.Component.extend(
 						{
 							nwWin.setResizable(true);
 							// TODO :: re-enable fullscreen control
-							this.attr("globals.files.all", files);
+							this.attr("globals.files", files);
 						}.bind(this));
 					}
 					else
 					{
-						this.attr("globals.files.all", files);
+						this.attr("globals.files", files);
 					}
 				}
 			}.bind(this));

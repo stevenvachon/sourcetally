@@ -50,9 +50,9 @@ export default can.Component.extend(
 		{
 			can.batch.start();
 			
-			getFiles.contents( this.attr("globals.files.filtered"), function(error, data, fileIndex)
+			getFiles.contents( this.attr("globals.files"), function(error, data, fileIndex)
 			{
-				var file = this.attr("globals.files.filtered").attr(fileIndex);
+				var file = this.attr("globals.files").attr(fileIndex);
 				
 				this.attr( "count", this.attr("count")+1 );
 				
@@ -61,7 +61,7 @@ export default can.Component.extend(
 					console.log("error", file.attr("path"));
 					file.attr("error", true);
 				}
-				else
+				else if ( file.attr("included") );
 				{
 					var slocData = sloc( data, file.attr("extension") );
 					
@@ -73,7 +73,7 @@ export default can.Component.extend(
 					file.attr("sloc", slocData);
 				}
 				
-				if ( this.attr("count") >= this.attr("globals.files.filtered").attr("length") )
+				if ( this.attr("count") >= this.attr("globals.files").attr("length") )
 				{
 					this.attr("globals.states").attr("counted", true);
 					can.batch.stop();
@@ -108,15 +108,22 @@ export default can.Component.extend(
 				scope.attr("sorting", true);
 			}
 			
-			var comparator = scope.attr("key");
+			var comparator1 = scope.attr("key");
+			var comparator2 = "path";
 			
 			// TODO :: switch to `can.List.prototype.sort` when possible
-			this.attr("globals.files.filtered", Array.prototype.sort.apply( this.attr("globals.files.filtered"), [function(a,b)
+			this.attr("globals.files", Array.prototype.sort.apply( this.attr("globals.files"), [function(a,b)
 			{
-				a = a.attr(comparator);
-				b = b.attr(comparator);
+				a = a.attr(comparator1);
+				b = b.attr(comparator1);
 				
-				// TODO :: if a===b, sort by path
+				// If primary comparators match, use secondary comparator
+				if (a === b)
+				{
+					a = a.attr(comparator2);
+					b = b.attr(comparator2);
+				}
+				
 				if ( this.attr("ascending") )
 				{
 					return a===b ? 0 : a<b ? -1 : 1;
@@ -127,12 +134,18 @@ export default can.Component.extend(
 				}
 			}.bind(this)]).slice(0));
 			
-			/*this.attr("files").sort( function(a, b)
+			/*this.attr("globals.files").sort( function(a, b)
 			{
-				a = a.attr(comparator);
-				b = b.attr(comparator);
+				a = a.attr(comparator1);
+				b = b.attr(comparator1);
 				
-				// TODO :: if a===b, sort by path
+				// If primary comparators match, use secondary comparator
+				if (a === b)
+				{
+					a = a.attr(comparator2);
+					b = b.attr(comparator2);
+				}
+				
 				if ( this.attr("ascending") )
 				{
 					return a===b ? 0 : a<b ? -1 : 1;
@@ -159,13 +172,16 @@ export default can.Component.extend(
 				total: 0
 			};
 			
-			this.attr("globals.files.filtered").forEach( function(file)
+			this.attr("globals.files").forEach( function(file)
 			{
-				totals.comment += file.attr("sloc").attr("comment");
-				totals.empty   += file.attr("sloc").attr("empty");
-				totals.mixed   += file.attr("sloc").attr("mixed");
-				totals.source  += file.attr("sloc").attr("source");
-				totals.total   += file.attr("sloc").attr("total");
+				if (file.included && !file.error && file.sloc)
+				{
+					totals.comment += file.sloc.comment;
+					totals.empty   += file.sloc.empty;
+					totals.mixed   += file.sloc.mixed;
+					totals.source  += file.sloc.source;
+					totals.total   += file.sloc.total;
+				}
 			});
 			
 			totals["comment%"] = this.percent(totals.comment, totals.total);

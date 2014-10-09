@@ -32,8 +32,7 @@ export default can.Component.extend(
 			can.batch.start();
 			this.attr("globals.states").attr("counted", false);
 			this.attr("globals.states").attr("filtered", false);
-			this.attr("globals.files").attr("all", []);
-			this.attr("globals.files").attr("filtered", []);
+			this.attr("globals").attr("files", []);
 			can.batch.stop();
 		}
 	}

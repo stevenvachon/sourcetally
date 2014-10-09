@@ -27,6 +27,15 @@ else
 
 
 
+var codeExtensions = {};
+
+sloc.extensions.forEach( function(extension)
+{
+	codeExtensions[extension] = { selected:true };
+});
+
+
+
 export default new can.Map(
 {
 	env:
@@ -40,16 +49,12 @@ export default new can.Map(
 	
 	extensions:
 	{
-		archives: ["zip"],
-		code: sloc.extensions,
-		codeFiltered: []	// Extensions filtered by user
+		archives: { zip:true },
+		code: codeExtensions
 	},
 	
-	files:
-	{
-		all: [],			// All imported files
-		filtered: []		// Files filtered by extensions.codeFiltered
-	},
+	files: [],
+	numFilesFiltered: 0,
 	
 	states:
 	{

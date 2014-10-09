@@ -16,23 +16,12 @@ function filename(file)
 
 
 
-function supportedExtension(ext, extensions)
+function supportedExtension(ext, extensionsHash)
 {
 	if (ext.indexOf(".")==0) ext = ext.substring(1);
 	ext = ext.toLowerCase();
 	
-	var supported = false;
-	
-	extensions.each( function(extension)
-	{
-		if (extension.toLowerCase() == ext)
-		{
-			supported = true;
-			return false;
-		}
-	});
-	
-	return supported;
+	return !!extensionsHash[ext];
 }
 
 
