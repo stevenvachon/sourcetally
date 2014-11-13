@@ -4,6 +4,7 @@
   "version": "0.0.0-ignore",
   "main": "index.html",
   "window": {
+    "frame": true,
     "fullscreen": false,
     "resizable": true,
     "title": "SourceTally",

@@ -17,6 +17,7 @@ function expanddir(dir, callback)
 {
 	var expandedFiles = [];
 	
+	// TODO :: compare with glob module
 	walk(dir.path)
 		.on("file", function(root, stats, next)
 		{

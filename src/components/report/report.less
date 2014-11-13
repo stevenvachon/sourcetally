@@ -1,4 +1,4 @@
-@import "components/app/variables.less";
+@import "../app/variables.less";
 
 
 
@@ -21,7 +21,7 @@
 	--app-report-col-width: 6%;
 	--app-report-col-big-width: 40%;
 	
-	--app-report-row-height: calc(1em + (0.1em*2) + 1px + 1px);	// text height + (paddingTop+paddingBottom) + borderBottom + paddingBottomExtra
+	--app-report-row-height: ~"calc(1em + (0.1em*2) + 1px + 1px)";	// text height + (paddingTop+paddingBottom) + borderBottom + paddingBottomExtra
 }
 
 
@@ -48,7 +48,7 @@ app-report
 				
 				&:not(:first-child):not(:last-child)
 				{
-					width: calc( var(--app-report-col-width) + 1px );
+					width: ~"calc( var(--app-report-col-width) + 1px )";
 				}
 				
 				&:first-child
@@ -62,16 +62,16 @@ app-report
 				}
 				
 				// Manual positioning
-				&:nth-child(2)	{ left:calc( ( var(--app-report-col-big-width) + ( var(--app-report-col-width) * 0 ) ) - 1px ) }
-				&:nth-child(3)	{ left:calc( ( var(--app-report-col-big-width) + ( var(--app-report-col-width) * 1 ) ) - 1px ) }
-				&:nth-child(4)	{ left:calc( ( var(--app-report-col-big-width) + ( var(--app-report-col-width) * 2 ) ) - 1px ) }
-				&:nth-child(5)	{ left:calc( ( var(--app-report-col-big-width) + ( var(--app-report-col-width) * 3 ) ) - 1px ) }
-				&:nth-child(6)	{ left:calc( ( var(--app-report-col-big-width) + ( var(--app-report-col-width) * 4 ) ) - 1px ) }
-				&:nth-child(7)	{ left:calc( ( var(--app-report-col-big-width) + ( var(--app-report-col-width) * 5 ) ) - 1px ) }
-				&:nth-child(8)	{ left:calc( ( var(--app-report-col-big-width) + ( var(--app-report-col-width) * 6 ) ) - 1px ) }
-				&:nth-child(9)	{ left:calc( ( var(--app-report-col-big-width) + ( var(--app-report-col-width) * 7 ) ) - 1px ) }
-				&:nth-child(10)	{ left:calc( ( var(--app-report-col-big-width) + ( var(--app-report-col-width) * 8 ) ) - 1px ) }
-				&:nth-child(11)	{ left:calc( ( var(--app-report-col-big-width) + ( var(--app-report-col-width) * 9 ) ) - 1px ) }
+				&:nth-child(2)	{ left:~"calc( ( var(--app-report-col-big-width) + ( var(--app-report-col-width) * 0 ) ) - 1px )" }
+				&:nth-child(3)	{ left:~"calc( ( var(--app-report-col-big-width) + ( var(--app-report-col-width) * 1 ) ) - 1px )" }
+				&:nth-child(4)	{ left:~"calc( ( var(--app-report-col-big-width) + ( var(--app-report-col-width) * 2 ) ) - 1px )" }
+				&:nth-child(5)	{ left:~"calc( ( var(--app-report-col-big-width) + ( var(--app-report-col-width) * 3 ) ) - 1px )" }
+				&:nth-child(6)	{ left:~"calc( ( var(--app-report-col-big-width) + ( var(--app-report-col-width) * 4 ) ) - 1px )" }
+				&:nth-child(7)	{ left:~"calc( ( var(--app-report-col-big-width) + ( var(--app-report-col-width) * 5 ) ) - 1px )" }
+				&:nth-child(8)	{ left:~"calc( ( var(--app-report-col-big-width) + ( var(--app-report-col-width) * 6 ) ) - 1px )" }
+				&:nth-child(9)	{ left:~"calc( ( var(--app-report-col-big-width) + ( var(--app-report-col-width) * 7 ) ) - 1px )" }
+				&:nth-child(10)	{ left:~"calc( ( var(--app-report-col-big-width) + ( var(--app-report-col-width) * 8 ) ) - 1px )" }
+				&:nth-child(11)	{ left:~"calc( ( var(--app-report-col-big-width) + ( var(--app-report-col-width) * 9 ) ) - 1px )" }
 				
 				&.sort-ascend, &.sort-descend
 				{
@@ -194,8 +194,8 @@ app-report
 			border-right-color: var(--app-report-border-light);
 			cursor: pointer;
 			font-weight: normal;
-			padding-bottom: calc( var(--app-report-arrow-height) + var(--app-report-arrow-padding) );
-			padding-top: calc( var(--app-report-arrow-height) + var(--app-report-arrow-padding) );
+			padding-bottom: ~"calc( var(--app-report-arrow-height) + var(--app-report-arrow-padding) )";
+			padding-top: ~"calc( var(--app-report-arrow-height) + var(--app-report-arrow-padding) )";
 			position: relative;
 			text-shadow: 0 .1em 0 rgba(255,255,255, .35);
 			transition: background-color .25s;
@@ -208,7 +208,7 @@ app-report
 				background-size: contain;
 				content: "";
 				height: var(--app-report-arrow-height);
-				left: calc( 50% - ( var(--app-report-arrow-width) / 2 ) );
+				left: ~"calc( 50% - ( var(--app-report-arrow-width) / 2 ) )";
 				opacity: 0;
 				position: absolute;
 				transition: opacity .5s;

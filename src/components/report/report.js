@@ -6,7 +6,6 @@ import getFiles from "lib/getFiles/index";
 
 import accounting from "accounting";
 import sloc from "sloc";
-//import "can/map/sort/sort";
 
 
 
@@ -28,9 +27,11 @@ export default can.Component.extend(
 	{
 		ascending: false,
 		count: 0,
+		//sortKey: null,
 		
 		columns:
 		[
+			// TODO :: remove `sorting` and rely on a helper to compare `key` with `sortKey`
 			{ sorting:false, key:"path",          name:"File Name" },
 			{ sorting:false, key:"sloc.total",    name:"Nominal Lines" },
 			{ sorting:false, key:"sloc.source",   name:"Source Code Lines" },
@@ -108,53 +109,12 @@ export default can.Component.extend(
 				scope.attr("sorting", true);
 			}
 			
-			var comparator1 = scope.attr("key");
-			var comparator2 = "path";
+			// TODO :: use `List.reverse()` when `scope.attr("key")==this.attr("sortKey")` for better performance
 			
-			// TODO :: switch to `can.List.prototype.sort` when possible
-			this.attr("globals.files", Array.prototype.sort.apply( this.attr("globals.files"), [function(a,b)
-			{
-				a = a.attr(comparator1);
-				b = b.attr(comparator1);
-				
-				// If primary comparators match, use secondary comparator
-				if (a === b)
-				{
-					a = a.attr(comparator2);
-					b = b.attr(comparator2);
-				}
-				
-				if ( this.attr("ascending") )
-				{
-					return a===b ? 0 : a<b ? -1 : 1;
-				}
-				else
-				{
-					return a===b ? 0 : a>b ? -1 : 1;
-				}
-			}.bind(this)]).slice(0));
-			
-			/*this.attr("globals.files").sort( function(a, b)
-			{
-				a = a.attr(comparator1);
-				b = b.attr(comparator1);
-				
-				// If primary comparators match, use secondary comparator
-				if (a === b)
-				{
-					a = a.attr(comparator2);
-					b = b.attr(comparator2);
-				}
-				
-				if ( this.attr("ascending") )
-				{
-					return a===b ? 0 : a<b ? -1 : 1;
-				}
-				else
-				{
-					return a===b ? 0 : a>b ? -1 : 1;
-				}
-			}.bind(this));*/
+			this.attr("globals.files").sort({
+				comparators: [scope.attr("key"), "path"],
+				order: this.attr("ascending") ? "ascending" : "descending"
+			});
 			
 			can.batch.stop();
 		},
